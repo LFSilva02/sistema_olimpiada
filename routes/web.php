@@ -33,5 +33,5 @@ Route::get('/alunos', [AlunoController::class, 'index'])->name('alunos.index');
 Route::post('/alunos', [AlunoController::class, 'store'])->name('alunos.store');
 Route::put('/alunos/{id}', [AlunoController::class, 'update'])->name('alunos.update');
 Route::post('/alunos/inativar', [AlunoController::class, 'inativar'])->name('alunos.inativar');
-
-
+Route::put('/alunos/ativar/{id}', [AlunoController::class, 'ativar'])->name('alunos.ativar');
+Route::get('/turmas/{id}/alunos', [AlunoController::class, 'alunosDaTurma']);   
