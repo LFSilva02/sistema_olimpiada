@@ -136,6 +136,12 @@
       </form>
     </div>
   </div>
+<!-- Footer -->
+    <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
+        <div class="container mx-auto">
+            <p class="text-sm">&copy; {{ date('Y') }} Olimpíadas Científicas Colégio Londrinense. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 
   <script>
     // Função para alternar a visibilidade do formulário de cadastro de turma
@@ -169,5 +175,5 @@
         sidebar.classList.toggle('sidebar-visible');
     });
   </script>
-</body> 
+</body>
 </html>

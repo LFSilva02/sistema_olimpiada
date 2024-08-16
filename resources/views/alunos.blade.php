@@ -52,33 +52,6 @@
             <h2 class="text-2xl font-bold my-4">Série: {{ $serie }}</h2>
             @foreach($turmasPorSerie as $turma)
                 <h3 class="text-xl font-semibold mt-4 mb-2 cursor-pointer text-blue-500 hover:underline" onclick="openTurmaPopup({{ $turma->id }})">Turma: {{ $turma->nome_turma }}</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    @foreach($turma->alunos as $aluno)
-                        <div class="p-4 border rounded-lg {{ $aluno->status == 'inativo' ? 'bg-gray-300 text-gray-500' : 'bg-white' }}">
-                            <h4 class="text-lg font-semibold">{{ $aluno->nome }}</h4>
-                            <p>Status: {{ $aluno->status }}</p>
-                            <div class="flex justify-between mt-2">
-                                @if($aluno->status == 'ativo')
-                                    <form action="{{ route('alunos.inativar') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="aluno_id" value="{{ $aluno->id }}">
-                                        <button type="submit" class="text-red-500 hover:text-red-700">Inativar</button>
-                                    </form>
-                                @endif
-                                @if($aluno->status == 'inativo')
-                                    <form action="{{ route('alunos.ativar', ['id' => $aluno->id]) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit" class="text-green-500 hover:text-green-700">Ativar</button>
-                                    </form>
-                                @endif
-                                <button class="openEditFormButton text-blue-500 hover:text-blue-700" data-id="{{ $aluno->id }}" data-nome="{{ $aluno->nome }}" data-turma-id="{{ $aluno->turma_id }}">
-                                    Editar
-                                </button>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
             @endforeach
         @endforeach
     </div>
@@ -138,14 +111,20 @@
     </div>
 
     <!-- Pop-up com alunos da turma -->
-    <div
-    id="turmaPopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
-    <h2 class="text-2xl font-bold mb-4">Alunos da Turma</h2>
-    <div id="turmaAlunosList"></div>
-    <button id="closeTurmaPopup" class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Fechar</button>
+    <div id="turmaPopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
+            <h2 class="text-2xl font-bold mb-4">Alunos da Turma</h2>
+            <div id="turmaAlunosList"></div>
+            <button id="closeTurmaPopup" class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Fechar</button>
+        </div>
     </div>
-    </div>
+    <!-- Footer -->
+        <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
+        <div class="container mx-auto">
+        <p class="text-sm">&copy; {{ date('Y') }} Olimpíadas Científicas Colégio Londrinense. Todos os direitos reservados.</p>
+        </div>
+        </footer>
+
     <script>
         document.getElementById('menuToggle').addEventListener('click', () => {
             document.getElementById('sidebar').classList.toggle('sidebar-hidden');
@@ -169,34 +148,48 @@
         });
 
         function openTurmaPopup(turmaId) {
-            // Fetch alunos for the selected turma
-            fetch(`/turmas/${turmaId}/alunos`)
+            fetch(`/turma/${turmaId}/alunos`)
                 .then(response => response.json())
                 .then(data => {
-                    const turmaAlunosList = document.getElementById('turmaAlunosList');
-                    turmaAlunosList.innerHTML = data.map(aluno => `
-                        <div class="p-4 border rounded-lg ${aluno.status === 'inativo' ? 'bg-gray-300 text-gray-500' : 'bg-white'}">
-                            <h4 class="text-lg font-semibold">${aluno.nome}</h4>
-                            <p>Status: ${aluno.status}</p>
+                    const listaAlunos = data.alunos.map(aluno => `
+                        <div class="flex justify-between items-center mb-2">
+                            <span>${aluno.nome}</span>
+                            <button class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-1 px-2 rounded" onclick="editAluno(${aluno.id})">Editar</button>
+                            <button class="bg-red-500 hover:bg-red-300 text-white font-bold py-1 px-2 rounded" onclick="deleteAluno(${aluno.id})">Excluir</button>
                         </div>
                     `).join('');
+                    document.getElementById('turmaAlunosList').innerHTML = listaAlunos;
                     document.getElementById('turmaPopup').classList.remove('hidden');
-                });
+                })
+                .catch(error => console.error('Erro ao carregar alunos:', error));
         }
 
-        document.querySelectorAll('.openEditFormButton').forEach(button => {
-            button.addEventListener('click', () => {
-                const alunoId = button.getAttribute('data-id');
-                const alunoNome = button.getAttribute('data-nome');
-                const turmaId = button.getAttribute('data-turma-id');
+        function editAluno(alunoId) {
+            fetch(`/aluno/${alunoId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('editAlunoId').value = data.id;
+                    document.getElementById('editNomeAluno').value = data.nome;
+                    document.getElementById('editTurmaId').value = data.turma_id;
+                    document.getElementById('editFormContainer').classList.remove('hidden');
+                })
+                .catch(error => console.error('Erro ao carregar aluno para edição:', error));
+        }
 
-                document.getElementById('editAlunoId').value = alunoId;
-                document.getElementById('editNomeAluno').value = alunoNome;
-                document.getElementById('editTurmaId').value = turmaId;
-
-                document.getElementById('editFormContainer').classList.remove('hidden');
-            });
-        });
+        function deleteAluno(alunoId) {
+            if (confirm('Tem certeza que deseja excluir este aluno?')) {
+                fetch(`/aluno/${alunoId}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Aluno excluído com sucesso!');
+                            location.reload(); // Recarrega a página para atualizar a lista
+                        } else {
+                            alert('Erro ao excluir aluno.');
+                        }
+                    })
+                    .catch(error => console.error('Erro ao excluir aluno:', error));
+            }
+        }
     </script>
 </body>
 </html>
