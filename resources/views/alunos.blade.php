@@ -118,78 +118,96 @@
             <button id="closeTurmaPopup" class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Fechar</button>
         </div>
     </div>
+
     <!-- Footer -->
-        <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
+    <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
         <div class="container mx-auto">
-        <p class="text-sm">&copy; {{ date('Y') }} Olimpíadas Científicas Colégio Londrinense. Todos os direitos reservados.</p>
+            <p class="text-sm">&copy; {{ date('Y') }} Olimpíadas Científicas Colégio Londrinense. Todos os direitos reservados.</p>
         </div>
-        </footer>
+    </footer>
 
     <script>
-        document.getElementById('menuToggle').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('sidebar-hidden');
-            document.getElementById('sidebar').classList.toggle('sidebar-visible');
+        // Toggle sidebar
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('sidebar-hidden');
+            sidebar.classList.toggle('sidebar-visible');
         });
 
-        document.getElementById('openFormButton').addEventListener('click', () => {
+        // Open and close form
+        document.getElementById('openFormButton').addEventListener('click', function() {
             document.getElementById('formContainer').classList.remove('hidden');
         });
-
-        document.getElementById('cancelFormButton').addEventListener('click', () => {
+        document.getElementById('cancelFormButton').addEventListener('click', function() {
             document.getElementById('formContainer').classList.add('hidden');
         });
 
-        document.getElementById('cancelEditFormButton').addEventListener('click', () => {
+        // Open and close edit form
+        document.getElementById('cancelEditFormButton').addEventListener('click', function() {
             document.getElementById('editFormContainer').classList.add('hidden');
         });
 
-        document.getElementById('closeTurmaPopup').addEventListener('click', () => {
-            document.getElementById('turmaPopup').classList.add('hidden');
-        });
-
+        // Open and close turma popup
         function openTurmaPopup(turmaId) {
+            console.log('Abrindo popup para a turma:', turmaId);
             fetch(`/turma/${turmaId}/alunos`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da requisição');
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    const listaAlunos = data.alunos.map(aluno => `
-                        <div class="flex justify-between items-center mb-2">
-                            <span>${aluno.nome}</span>
-                            <button class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-1 px-2 rounded" onclick="editAluno(${aluno.id})">Editar</button>
-                            <button class="bg-red-500 hover:bg-red-300 text-white font-bold py-1 px-2 rounded" onclick="deleteAluno(${aluno.id})">Excluir</button>
-                        </div>
-                    `).join('');
-                    document.getElementById('turmaAlunosList').innerHTML = listaAlunos;
+                    console.log('Dados dos alunos:', data);
+                    const list = document.getElementById('turmaAlunosList');
+                    list.innerHTML = '';
+                    data.alunos.forEach(aluno => {
+                        const item = document.createElement('div');
+                        item.className = 'border-b border-gray-200 py-2';
+                        item.innerHTML = `
+                            <div class="flex justify-between items-center">
+                                <span>${aluno.nome}</span>
+                                <div>
+                                    <button class="bg-yellow-500 hover:bg-yellow-300 text-white font-bold py-1 px-2 rounded mr-2" onclick="editAluno(${aluno.id})">Editar</button>
+                                    <form action="/alunos/${aluno.id}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-500 hover:bg-red-300 text-white font-bold py-1 px-2 rounded">Deletar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        `;
+                        list.appendChild(item);
+                    });
                     document.getElementById('turmaPopup').classList.remove('hidden');
                 })
                 .catch(error => console.error('Erro ao carregar alunos:', error));
         }
 
+        document.getElementById('closeTurmaPopup').addEventListener('click', function() {
+            document.getElementById('turmaPopup').classList.add('hidden');
+        });
+
         function editAluno(alunoId) {
-            fetch(`/aluno/${alunoId}`)
-                .then(response => response.json())
+            console.log('Editando aluno com ID:', alunoId);
+            fetch(`/alunos/${alunoId}/edit`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da requisição');
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    document.getElementById('editAlunoId').value = data.id;
-                    document.getElementById('editNomeAluno').value = data.nome;
-                    document.getElementById('editTurmaId').value = data.turma_id;
+                    console.log('Dados do aluno para edição:', data);
+                    document.getElementById('editAlunoId').value = data.aluno.id;
+                    document.getElementById('editNomeAluno').value = data.aluno.nome;
+                    document.getElementById('editTurmaId').value = data.aluno.turma_id;
                     document.getElementById('editFormContainer').classList.remove('hidden');
                 })
-                .catch(error => console.error('Erro ao carregar aluno para edição:', error));
-        }
-
-        function deleteAluno(alunoId) {
-            if (confirm('Tem certeza que deseja excluir este aluno?')) {
-                fetch(`/aluno/${alunoId}`, { method: 'DELETE' })
-                    .then(response => {
-                        if (response.ok) {
-                            alert('Aluno excluído com sucesso!');
-                            location.reload(); // Recarrega a página para atualizar a lista
-                        } else {
-                            alert('Erro ao excluir aluno.');
-                        }
-                    })
-                    .catch(error => console.error('Erro ao excluir aluno:', error));
-            }
+                .catch(error => console.error('Erro ao carregar dados do aluno:', error));
         }
     </script>
+
+
 </body>
 </html>
