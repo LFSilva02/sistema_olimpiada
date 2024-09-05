@@ -9,7 +9,7 @@ class Aluno extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'turma_id'];
+    protected $fillable = ['nome', 'turma_id', 'ativo'];
 
     public function turma()
     {

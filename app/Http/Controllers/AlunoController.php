@@ -10,62 +10,32 @@ class AlunoController extends Controller
 {
     public function index()
     {
-        // Organizando os alunos por série e turma
-        $turmas = Turma::with('alunos')->orderBy('serie')->orderBy('nome_turma')->get();
+        $turmas = Turma::with('alunos')->get();
         return view('alunos', compact('turmas'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nomeAluno' => 'required|string|max:255',
+            'nome' => 'required',
             'turma_id' => 'required|exists:turmas,id',
+            'ativo' => 'required|boolean',
         ]);
 
-        Aluno::create([
-            'nome' => $request->nomeAluno,
-            'turma_id' => $request->turma_id,
-            'status' => 'ativo',
-        ]);
+        Aluno::create($request->all());
 
-        return redirect()->route('alunos.index')->with('success', 'Aluno cadastrado com sucesso');
+        return redirect()->route('alunos.index')->with('success', 'Aluno cadastrado com sucesso.');
     }
 
-    public function update(Request $request, $id)
+    public function showAlunosDaTurma($turmaId)
     {
-        $request->validate([
-            'nomeAluno' => 'required|string|max:255',
-            'turma_id' => 'required|exists:turmas,id',
-        ]);
-
-        $aluno = Aluno::findOrFail($id);
-        $aluno->update([
-            'nome' => $request->nomeAluno,
-            'turma_id' => $request->turma_id,
-        ]);
-
-        return redirect()->route('alunos.index')->with('success', 'Aluno atualizado com sucesso');
+        $alunos = Aluno::where('turma_id', $turmaId)->get();
+        return response()->json(['alunos' => $alunos]);
     }
 
-    public function inativar(Request $request)
+    public function destroy(Aluno $aluno)
     {
-        $aluno = Aluno::findOrFail($request->aluno_id);
-        $aluno->update(['status' => 'inativo']);
-
-        return redirect()->route('alunos.index')->with('success', 'Aluno inativado com sucesso');
-    }
-
-    public function ativar(Request $request)
-    {
-        $aluno = Aluno::findOrFail($request->aluno_id);
-        $aluno->update(['status' => 'ativo']);
-
-        return redirect()->route('alunos.index')->with('success', 'Aluno ativado com sucesso');
-    }
-
-    public function alunosDaTurma($id)
-    {
-        $turma = Turma::with('alunos')->findOrFail($id);
-        return response()->json($turma->alunos);
+        $aluno->delete();
+        return redirect()->route('alunos.index')->with('success', 'Aluno excluído com sucesso.');
     }
 }

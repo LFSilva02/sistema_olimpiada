@@ -36,7 +36,7 @@
         <div></div>
     </div>
 
-    @include('components.sidebar') <!-- Certifique-se de que o sidebar tem a classe 'hidden' inicialmente -->
+    @include('components.sidebar')
 
     <div class="ml-64 pt-20 mb-8 flex items-center justify-between">
         <div class="flex-1 text-center">
@@ -64,7 +64,7 @@
                 @csrf
                 <div class="mb-4">
                     <label for="nomeAluno" class="block text-sm font-medium text-gray-700">Nome do Aluno</label>
-                    <input type="text" name="nomeAluno" id="nomeAluno" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input type="text" name="nome" id="nomeAluno" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
                 <div class="mb-4">
                     <label for="turma_id" class="block text-sm font-medium text-gray-700">Turma</label>
@@ -74,37 +74,16 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="flex justify-between">
-                    <button type="submit" class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Cadastrar</button>
-                    <button type="button" id="cancelFormButton" class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Formulário para editar alunos -->
-    <div id="editFormContainer" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
-            <h2 class="text-2xl font-bold mb-4">Editar Aluno</h2>
-            <form id="editForm" method="POST">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="aluno_id" id="editAlunoId">
                 <div class="mb-4">
-                    <label for="editNomeAluno" class="block text-sm font-medium text-gray-700">Nome do Aluno</label>
-                    <input type="text" name="nome" id="editNomeAluno" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
-                <div class="mb-4">
-                    <label for="editTurmaId" class="block text-sm font-medium text-gray-700">Turma</label>
-                    <select name="turma_id" id="editTurmaId" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        @foreach($turmas as $turma)
-                            <option value="{{ $turma->id }}">{{ $turma->nome_turma }}</option>
-                        @endforeach
+                    <label for="ativo" class="block text-sm font-medium text-gray-700">Ativo</label>
+                    <select name="ativo" id="ativo" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
                     </select>
                 </div>
                 <div class="flex justify-between">
-                    <button type="submit" class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Salvar Alterações</button>
-                    <button type="button" id="cancelEditFormButton" class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+                    <button type="submit" class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Cadastrar</button>
+                    <button type="button" id="cancelFormButton" class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Cancelar</button>
                 </div>
             </form>
         </div>
@@ -119,7 +98,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
         <div class="container mx-auto">
             <p class="text-sm">&copy; {{ date('Y') }} Olimpíadas Científicas Colégio Londrinense. Todos os direitos reservados.</p>
@@ -127,38 +105,24 @@
     </footer>
 
     <script>
-        // Toggle sidebar
         document.getElementById('menuToggle').addEventListener('click', function() {
             const sidebar = document.querySelector('.sidebar');
             sidebar.classList.toggle('sidebar-hidden');
             sidebar.classList.toggle('sidebar-visible');
         });
 
-        // Open and close form
         document.getElementById('openFormButton').addEventListener('click', function() {
             document.getElementById('formContainer').classList.remove('hidden');
         });
+
         document.getElementById('cancelFormButton').addEventListener('click', function() {
             document.getElementById('formContainer').classList.add('hidden');
         });
 
-        // Open and close edit form
-        document.getElementById('cancelEditFormButton').addEventListener('click', function() {
-            document.getElementById('editFormContainer').classList.add('hidden');
-        });
-
-        // Open and close turma popup
         function openTurmaPopup(turmaId) {
-            console.log('Abrindo popup para a turma:', turmaId);
             fetch(`/turma/${turmaId}/alunos`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro na resposta da requisição');
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log('Dados dos alunos:', data);
                     const list = document.getElementById('turmaAlunosList');
                     list.innerHTML = '';
                     data.alunos.forEach(aluno => {
@@ -187,27 +151,6 @@
         document.getElementById('closeTurmaPopup').addEventListener('click', function() {
             document.getElementById('turmaPopup').classList.add('hidden');
         });
-
-        function editAluno(alunoId) {
-            console.log('Editando aluno com ID:', alunoId);
-            fetch(`/alunos/${alunoId}/edit`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro na resposta da requisição');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Dados do aluno para edição:', data);
-                    document.getElementById('editAlunoId').value = data.aluno.id;
-                    document.getElementById('editNomeAluno').value = data.aluno.nome;
-                    document.getElementById('editTurmaId').value = data.aluno.turma_id;
-                    document.getElementById('editFormContainer').classList.remove('hidden');
-                })
-                .catch(error => console.error('Erro ao carregar dados do aluno:', error));
-        }
     </script>
-
-
 </body>
 </html>

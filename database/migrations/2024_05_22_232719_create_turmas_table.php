@@ -12,7 +12,7 @@ class CreateTurmasTable extends Migration
             $table->id();
             $table->string('nome_turma');
             $table->string('serie');
-            $table->year('ano');
+            $table->string('ano');
             $table->timestamps();
         });
     }
