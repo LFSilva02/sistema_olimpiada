@@ -2,68 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Premiado;
-use App\Models\Turma;
 use App\Models\Aluno;
 use App\Models\Olimpiada;
+use App\Models\Premiado;
+use Illuminate\Http\Request;
 
-class PremiadoController extends Controller
+class PremiadosController extends Controller
 {
-    // Listar todos os premiados agrupados por olimpíada
+    // Exibe a lista de premiados
     public function index()
     {
-        $premiados = Premiado::all()->groupBy('olimpiada');
+        $premiados = Premiado::with('aluno.turma')->get()->groupBy(function($premiado) {
+            return $premiado->aluno->turma->serie;
+        });
+
         $alunos = Aluno::all();
-        $turmas = Turma::all();
         $olimpiadas = Olimpiada::all();
-        return view('premiados', compact('premiados','alunos', 'turmas','olimpiadas'));
+
+        return view('premiados', compact('premiados', 'alunos', 'olimpiadas'));
     }
 
-    // Salvar um novo premiado
+    // Armazena um novo premiado
     public function store(Request $request)
     {
         $request->validate([
-            'nomeAluno' => 'required|string|max:255',
-            'medalha' => 'required|string|max:255',
-            'olimpiada' => 'required|string|max:255',
+            'aluno_id' => 'required',
+            'medalha' => 'required',
+            'olimpiada_id' => 'required',
         ]);
 
-        Premiado::create([
-            'nome' => $request->nomeAluno,
-            'medalha' => $request->medalha,
-            'olimpiada' => $request->olimpiada,
-        ]);
+        Premiado::create($request->all());
 
-        return redirect()->route('premiados.index')->with('success', 'Premiado cadastrado com sucesso.');
+        return redirect()->route('premiados.index');
     }
 
-    // Editar premiado
-    public function editar($id, Request $request)
+    // Atualiza um premiado existente
+    public function update(Request $request, $id)
     {
-        $premiado = Premiado::
-        find($id);
-        $request->validate([
-            'nomeAluno' => 'required|string|max:255',
-            'medalha' => 'required|string|max:255',
-            'olimpiada' => 'required|string|max:255',
-        ]);
+        $premiado = Premiado::findOrFail($id);
 
-        $premiado->update([
-            'nome' => $request->nomeAluno,
-            'medalha' => $request->medalha,
-            'olimpiada' => $request->olimpiada,
-        ]);
+        $premiado->update($request->all());
 
-        return redirect()->route('premiados.index')->with('success', 'Premiado atualizado com sucesso.');
+        return redirect()->route('premiados.index');
     }
 
-    // Remover premiado
-    public function remover($id)
+    // Remove um premiado
+    public function destroy($id)
     {
-        $premiado = Premiado::find($id);
+        $premiado = Premiado::findOrFail($id);
         $premiado->delete();
 
-        return redirect()->route('premiados.index')->with('success', 'Premiado removido com sucesso.');
+        return redirect()->route('premiados.index');
     }
 }
+

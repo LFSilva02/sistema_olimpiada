@@ -10,8 +10,18 @@ class Premiado extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nome',
+        'aluno_id',
+        'olimpiada_id',
         'medalha',
-        'olimpiada',
     ];
+
+    public function aluno()
+    {
+        return $this->belongsTo(Aluno::class);
+    }
+
+    public function olimpíada()
+    {
+        return $this->belongsTo(Olimpiada::class);
+    }
 }

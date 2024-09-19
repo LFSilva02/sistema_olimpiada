@@ -22,20 +22,16 @@
 </head>
 <body class="bg-white">
 
+<!-- Cabeçalho -->
 <div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-between items-center px-4">
-    <div>
-      <button id="menuToggle" class="text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
+    <button id="menuToggle" class="text-white">
+    </button>
     <div class="flex items-center space-x-4">
-      <img src="{{ asset('storage/img/colegiolondrinense.png')}}" alt="Logo" class="h-14">
-      <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
+        <img src="{{ asset('storage/img/colegiolondrinense.png')}}" alt="Logo" class="h-14">
+        <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
+      </div>
+      <div></div>
     </div>
-    <div></div>
-  </div>
   @include('components.sidebar')
 
   <div class="ml-64 pt-20 mb-8 flex items-center justify-between">

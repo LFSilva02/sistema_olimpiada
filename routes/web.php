@@ -46,5 +46,5 @@ Route::get('/turmas/{id}/alunos', [AlunoController::class, 'alunosDaTurma']);
 //PREMIADOS
 Route::get('/premiados', [PremiadoController::class, 'index'])->name('premiados.index');
 Route::post('/premiados/store', [PremiadoController::class, 'store'])->name('premiados.store');
-Route::post('/premiados/editar/{id}', [PremiadoController::class, 'editar'])->name('premiados.editar');
+Route::put('/premiados/editar/{id}', [PremiadoController::class, 'editar'])->name('premiados.editar');
 Route::delete('/premiados/remover/{id}', [PremiadoController::class, 'remover'])->name('premiados.remover');
