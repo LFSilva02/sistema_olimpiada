@@ -13,6 +13,7 @@ class CreateTurmasTable extends Migration
             $table->string('nome_turma');
             $table->string('serie');
             $table->string('ano');
+            $table->string('ativo')->default('ativo');
             $table->timestamps();
         });
     }

@@ -13,6 +13,7 @@ class CreateAlunosTable extends Migration
             $table->string('nome');
             $table->unsignedBigInteger('turma_id');
             $table->foreign('turma_id')->references('id')->on('turmas')->onDelete('cascade');
+            $table->string('ativo')->default('ativo');
             $table->timestamps();
         });
     }

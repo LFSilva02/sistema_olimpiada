@@ -20,7 +20,7 @@ class Premiado extends Model
         return $this->belongsTo(Aluno::class);
     }
 
-    public function olimpíada()
+    public function olimpiada()
     {
         return $this->belongsTo(Olimpiada::class);
     }

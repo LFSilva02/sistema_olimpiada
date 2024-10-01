@@ -10,19 +10,19 @@ class ConhecimentoController extends Controller
     public function index()
     {
         $conhecimentos = Conhecimento::all();
-        return view('conhecimentos', ['conhecimentos' => $conhecimentos]);
+        return view('conhecimentos', compact('conhecimentos'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nomeConhecimento' => 'required',
+            'nome_conhecimento' => 'required',
             'descricao' => 'required'
         ]);
 
-        // Verificar se já existe um conhecimento com o mesmo nome e descrição
-        $exists = Conhecimento::where('nome_conhecimento', $request->input('nomeConhecimento'))
-                              ->where('descricao', $request->input('descricao'))
+        // Verifica se já existe um conhecimento com o mesmo nome e descrição
+        $exists = Conhecimento::where('nome_conhecimento', $request->nome_conhecimento)
+                              ->where('descricao', $request->descricao)
                               ->exists();
 
         if ($exists) {
@@ -30,50 +30,28 @@ class ConhecimentoController extends Controller
         }
 
         Conhecimento::create([
-            'nome_conhecimento' => $request->input('nomeConhecimento'),
-            'descricao' => $request->input('descricao'),
+            'nome_conhecimento' => $request->nome_conhecimento,
+            'descricao' => $request->descricao,
             'ativo' => 1,
         ]);
 
         return redirect()->route('conhecimentos.index');
     }
 
-    public function update(Request $request, $id)
-    {
-        $conhecimento = Conhecimento::find($id);
-
-        if (!$conhecimento) {
-            return redirect()->route('conhecimentos.index')->with('error', 'Área de Conhecimento não encontrada');
-        }
-
-        $conhecimento->nome_conhecimento = $request->input('nome_conhecimento');
-        $conhecimento->descricao = $request->input('descricao');
-        $conhecimento->save();
-
-        return redirect()->route('conhecimentos.index')->with('success', 'Área de Conhecimento atualizada com sucesso');
-    }
-
     public function inativar(Request $request)
     {
-        $id = $request->input('conhecimento_id');
-        $conhecimento = Conhecimento::find($id);
-
-        if ($conhecimento) {
-            $conhecimento->ativo = 0;
-            $conhecimento->save();
-        }
+        $conhecimento = Conhecimento::findOrFail($request->conhecimento_id);
+        $conhecimento->ativo = 0;
+        $conhecimento->save();
 
         return redirect()->route('conhecimentos.index');
     }
 
     public function ativar($id)
     {
-        $conhecimento = Conhecimento::find($id);
-
-        if ($conhecimento) {
-            $conhecimento->ativo = 1;
-            $conhecimento->save();
-        }
+        $conhecimento = Conhecimento::findOrFail($id);
+        $conhecimento->ativo = 1;
+        $conhecimento->save();
 
         return redirect()->route('conhecimentos.index');
     }

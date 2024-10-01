@@ -25,16 +25,14 @@
   </style>
 </head>
 <body class="bg-white">
+
 <!-- Cabeçalho -->
-<div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-between items-center px-4">
-    <button id="menuToggle" class="text-white">
-    </button>
-    <div class="flex items-center space-x-4">
-        <img src="{{ asset('storage/img/colegiolondrinense.png')}}" alt="Logo" class="h-14">
-        <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
-      </div>
-      <div></div>
-    </div>
+<div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
+  <div class="flex items-center space-x-4">
+    <img src="{{ asset('storage/img/colegiolondrinense.png') }}" alt="Logo" class="h-14">
+    <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
+  </div>
+</div>
 
 @include('components.sidebar')
 
@@ -49,35 +47,40 @@
 
 <div class="flex justify-center">
   <div class="w-full lg:w-2/3 px-4">
-    @foreach($conhecimentos as $conhecimento)
-      <div class="turma-card {{ $conhecimento->ativo ? 'bg-blue-300' : 'inactive' }} rounded-md px-4 py-2 mb-4 flex items-center relative openViewFormButton cursor-pointer" data-nome="{{ $conhecimento->nome_conhecimento }}" data-descricao="{{ $conhecimento->descricao }}">
-        <p class="text-center cursor-pointer">{{ $conhecimento->nome_conhecimento }}</p>
-        <div class="flex items-center ml-auto">
-          <button class="openEditFormButton bi bi-pencil mx-3" data-id="{{ $conhecimento->id }}" data-nome="{{ $conhecimento->nome_conhecimento }}" data-descricao="{{ $conhecimento->descricao }}"></button>
-          @if($conhecimento->ativo)
-            <form action="{{ route('conhecimentos.inativar') }}" method="POST">
-              @csrf
-              <input type="hidden" name="conhecimento_id" value="{{ $conhecimento->id }}">
-              <button type="submit" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded">
-                <i class="bi bi-trash"></i>
-              </button>
-            </form>
-          @else
-            <form action="{{ route('conhecimentos.ativar', ['id' => $conhecimento->id] ) }}" method="POST">
-              @csrf
-              @method('PUT')
-              <input type="hidden" name="conhecimento_id" value="{{ $conhecimento->id }}">
-              <button type="submit" class="bg-green-300 hover:bg-green-400 text-green-700 font-bold py-2 px-4 rounded">
-                <i class="bi bi-check"></i>
-              </button>
-            </form>
-          @endif
+    @if($conhecimentos->isEmpty())
+      <p class="text-center text-gray-600">Nenhuma área de conhecimento cadastrada.</p>
+    @else
+      @foreach($conhecimentos as $conhecimento)
+        <div class="turma-card {{ $conhecimento->ativo ? 'bg-blue-300' : 'inactive' }} rounded-md px-4 py-2 mb-4 flex items-center relative openViewFormButton cursor-pointer" data-nome="{{ $conhecimento->nome_conhecimento }}" data-descricao="{{ $conhecimento->descricao }}">
+          <p class="text-center cursor-pointer">{{ $conhecimento->nome_conhecimento }}</p>
+          <div class="flex items-center ml-auto">
+            <button class="openEditFormButton bi bi-pencil mx-3" data-id="{{ $conhecimento->id }}" data-nome="{{ $conhecimento->nome_conhecimento }}" data-descricao="{{ $conhecimento->descricao }}"></button>
+            @if($conhecimento->ativo)
+              <form action="{{ route('conhecimentos.inativar') }}" method="POST">
+                @csrf
+                <input type="hidden" name="conhecimento_id" value="{{ $conhecimento->id }}">
+                <button type="submit" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            @else
+              <form action="{{ route('conhecimentos.ativar', ['id' => $conhecimento->id]) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="conhecimento_id" value="{{ $conhecimento->id }}">
+                <button type="submit" class="bg-green-300 hover:bg-green-400 text-green-700 font-bold py-2 px-4 rounded">
+                  <i class="bi bi-check"></i>
+                </button>
+              </form>
+            @endif
+          </div>
         </div>
-      </div>
-    @endforeach
+      @endforeach
+    @endif
   </div>
 </div>
 
+<!-- Modal de Cadastro -->
 <div id="formContainer" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
   <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
     <h2 class="text-2xl font-bold mb-4">Cadastrar Nova Área de Conhecimento</h2>
@@ -99,39 +102,43 @@
   </div>
 </div>
 
-<div id="viewFormContainer" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
-      <h2 class="text-2xl font-bold mb-4">Visualizar Área de Conhecimento</h2>
+<!-- Modal de Edição -->
+<div id="editFormContainer" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
+    <h2 class="text-2xl font-bold mb-4">Editar Área de Conhecimento</h2>
+    <form id="editForm" action="" method="POST">
+      @csrf
+      @method('PUT')
+      <input type="hidden" name="conhecimento_id" id="editConhecimentoId">
       <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700">Nome da Área</label>
-        <p id="viewNomeConhecimento" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"></p>
+        <label for="editNomeConhecimento" class="block text-sm font-medium text-gray-700">Nome da Área</label>
+        <input type="text" name="nome_conhecimento" id="editNomeConhecimento" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
       </div>
       <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700">Descrição</label>
-        <p id="viewDescricao" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"></p>
+        <label for="editDescricao" class="block text-sm font-medium text-gray-700">Descrição</label>
+        <input type="text" name="descricao" id="editDescricao" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
       </div>
-      <div class="flex justify-end">
-        <button type="button" id="cancelViewFormButton" class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Fechar</button>
+      <div class="flex justify-between">
+        <button type="submit" class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Salvar Alterações</button>
+        <button type="button" id="cancelEditFormButton" class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Cancelar</button>
       </div>
-    </div>
+    </form>
   </div>
+</div>
 
-<!-- Footer -->
-<footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
-    <div class="container mx-auto">
-        <p class="text-sm">&copy; {{ date('Y') }} Olimpíadas Científicas Colégio Londrinense. Todos os direitos reservados.</p>
-    </div>
-</footer>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const openFormButton = document.getElementById('openFormButton');
     const formContainer = document.getElementById('formContainer');
     const cancelFormButton = document.getElementById('cancelFormButton');
-    const openViewFormButtons = document.querySelectorAll('.openViewFormButton');
-    const viewFormContainer = document.getElementById('viewFormContainer');
-    const viewNomeConhecimento = document.getElementById('viewNomeConhecimento');
-    const viewDescricao = document.getElementById('viewDescricao');
-    const cancelViewFormButton = document.getElementById('cancelViewFormButton');
+
+    const openEditFormButtons = document.querySelectorAll('.openEditFormButton');
+    const editFormContainer = document.getElementById('editFormContainer');
+    const cancelEditFormButton = document.getElementById('cancelEditFormButton');
+    const editForm = document.getElementById('editForm');
+    const editConhecimentoId = document.getElementById('editConhecimentoId');
+    const editNomeConhecimento = document.getElementById('editNomeConhecimento');
+    const editDescricao = document.getElementById('editDescricao');
 
     openFormButton.addEventListener('click', function () {
       formContainer.classList.remove('hidden');
@@ -141,22 +148,26 @@
       formContainer.classList.add('hidden');
     });
 
-    openViewFormButtons.forEach(button => {
+    openEditFormButtons.forEach(button => {
       button.addEventListener('click', function () {
-        const nomeConhecimento = this.dataset.nome;
-        const descricao = this.dataset.descricao;
+        const id = this.getAttribute('data-id');
+        const nome = this.getAttribute('data-nome');
+        const descricao = this.getAttribute('data-descricao');
 
-        viewNomeConhecimento.textContent = nomeConhecimento;
-        viewDescricao.textContent = descricao;
+        editConhecimentoId.value = id;
+        editNomeConhecimento.value = nome;
+        editDescricao.value = descricao;
 
-        viewFormContainer.classList.remove('hidden');
+        editForm.setAttribute('action', `/conhecimentos/${id}/edit`);
+        editFormContainer.classList.remove('hidden');
       });
     });
 
-    cancelViewFormButton.addEventListener('click', function () {
-      viewFormContainer.classList.add('hidden');
+    cancelEditFormButton.addEventListener('click', function () {
+      editFormContainer.classList.add('hidden');
     });
   });
 </script>
+
 </body>
 </html>

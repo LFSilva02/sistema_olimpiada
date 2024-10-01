@@ -2,57 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Aluno;
-use App\Models\Olimpiada;
-use App\Models\Premiado;
 use Illuminate\Http\Request;
+use App\Models\Premiado;
 
-class PremiadosController extends Controller
+class PremiadoController extends Controller
 {
-    // Exibe a lista de premiados
+    // Exibir os premiados por categoria
     public function index()
     {
-        $premiados = Premiado::with('aluno.turma')->get()->groupBy(function($premiado) {
-            return $premiado->aluno->turma->serie;
-        });
-
-        $alunos = Aluno::all();
-        $olimpiadas = Olimpiada::all();
-
-        return view('premiados', compact('premiados', 'alunos', 'olimpiadas'));
+        $premiados = Premiado::all()->groupBy('categoria');
+        return view('premiados', compact('premiados'));
     }
 
-    // Armazena um novo premiado
+    // Criar novo premiado
     public function store(Request $request)
     {
-        $request->validate([
-            'aluno_id' => 'required',
-            'medalha' => 'required',
-            'olimpiada_id' => 'required',
-        ]);
-
-        Premiado::create($request->all());
+        $premiado = new Premiado();
+        $premiado->nome = $request->nomePremiado;
+        $premiado->categoria = $request->categoria;
+        $premiado->ativo = true;
+        $premiado->save();
 
         return redirect()->route('premiados.index');
     }
 
-    // Atualiza um premiado existente
+    // Editar premiado
     public function update(Request $request, $id)
     {
-        $premiado = Premiado::findOrFail($id);
-
-        $premiado->update($request->all());
+        $premiado = Premiado::find($id);
+        $premiado->nome = $request->nomePremiado;
+        $premiado->categoria = $request->categoria;
+        $premiado->save();
 
         return redirect()->route('premiados.index');
     }
 
-    // Remove um premiado
-    public function destroy($id)
+    // Ativar premiado
+    public function ativar($id)
     {
-        $premiado = Premiado::findOrFail($id);
-        $premiado->delete();
+        $premiado = Premiado::find($id);
+        $premiado->ativo = true;
+        $premiado->save();
+
+        return redirect()->route('premiados.index');
+    }
+
+    // Inativar premiado
+    public function inativar(Request $request)
+    {
+        $premiado = Premiado::find($request->premiado_id);
+        $premiado->ativo = false;
+        $premiado->save();
 
         return redirect()->route('premiados.index');
     }
 }
-

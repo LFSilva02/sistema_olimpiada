@@ -23,15 +23,13 @@
 <body class="bg-white">
 
 <!-- Cabeçalho -->
-<div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-between items-center px-4">
-    <button id="menuToggle" class="text-white">
-    </button>
+<div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
     <div class="flex items-center space-x-4">
-        <img src="{{ asset('storage/img/colegiolondrinense.png')}}" alt="Logo" class="h-14">
-        <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
-      </div>
-      <div></div>
+      <img src="{{ asset('storage/img/colegiolondrinense.png') }}" alt="Logo" class="h-14">
+      <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
     </div>
+  </div>
+  
   @include('components.sidebar')
 
   <div class="ml-64 pt-20 mb-8 flex items-center justify-between">

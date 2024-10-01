@@ -13,6 +13,7 @@ class CreatePremiadosTable extends Migration
             $table->foreignId('aluno_id')->constrained()->onDelete('cascade');
             $table->foreignId('olimpiada_id')->constrained()->onDelete('cascade');
             $table->enum('medalha', ['ouro', 'prata', 'bronze']);
+            $table->string('ativo')->default('ativo');
             $table->timestamps();
         });
     }

@@ -23,8 +23,6 @@ Route::get('/turmas/{id}', [TurmaController::class, 'show'])->name('turmas.show'
 //CONHECIMENTOS
 Route::get('/conhecimentos', [ConhecimentoController::class, 'index'])->name('conhecimentos.index');
 Route::post('/conhecimentos', [ConhecimentoController::class, 'store'])->name('conhecimentos.store');
-Route::put('/conhecimentos/{id}', [ConhecimentoController::class, 'update'])->name('conhecimentos.update');
-Route::delete('/conhecimentos/{id}', [ConhecimentoController::class, 'destroy'])->name('conhecimentos.destroy');
 Route::post('/conhecimentos/inativar', [ConhecimentoController::class, 'inativar'])->name('conhecimentos.inativar');
 Route::put('/conhecimentos/ativar/{id}', [ConhecimentoController::class, 'ativar'])->name('conhecimentos.ativar');
 
@@ -45,6 +43,8 @@ Route::get('/turmas/{id}/alunos', [AlunoController::class, 'alunosDaTurma']);
 
 //PREMIADOS
 Route::get('/premiados', [PremiadoController::class, 'index'])->name('premiados.index');
-Route::post('/premiados/store', [PremiadoController::class, 'store'])->name('premiados.store');
-Route::put('/premiados/editar/{id}', [PremiadoController::class, 'editar'])->name('premiados.editar');
-Route::delete('/premiados/remover/{id}', [PremiadoController::class, 'remover'])->name('premiados.remover');
+Route::post('/premiados', [PremiadoController::class, 'store'])->name('premiados.store');
+Route::put('/premiados/{id}', [PremiadoController::class, 'update'])->name('premiados.update');
+Route::put('/premiados/ativar/{id}', [PremiadoController::class, 'ativar'])->name('premiados.ativar');
+Route::post('/premiados/inativar', [PremiadoController::class, 'inativar'])->name('premiados.inativar');
+

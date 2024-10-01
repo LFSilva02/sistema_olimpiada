@@ -71,7 +71,6 @@ class OlimpiadaController extends Controller
         return redirect()->route('olimpiadas.index')->with('success', 'Olimpíada inativada com sucesso');
     }
 
-
     public function ativar(Request $request, $id)
 {
     $olimpiada = Olimpiada::find($id);
@@ -83,6 +82,4 @@ class OlimpiadaController extends Controller
 
     return redirect()->route('olimpiadas.index')->with('success', 'Olimpíada ativada com sucesso');
 }
-
-
 }
