@@ -29,7 +29,7 @@
       <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
     </div>
   </div>
-  
+
   @include('components.sidebar')
 
   <div class="ml-64 pt-20 mb-8 flex items-center justify-between">
@@ -130,6 +130,7 @@
       </form>
     </div>
   </div>
+
 <!-- Footer -->
     <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
         <div class="container mx-auto">
@@ -142,32 +143,39 @@
     document.getElementById('openFormButton').addEventListener('click', function() {
       document.getElementById('formContainer').classList.remove('hidden');
     });
+
     document.getElementById('cancelFormButton').addEventListener('click', function() {
       document.getElementById('formContainer').classList.add('hidden');
     });
 
     // Função para alternar a visibilidade do formulário de edição de turma
-    document.querySelectorAll('.openEditFormButton').forEach(function(button) {
+    const editFormButtons = document.querySelectorAll('.openEditFormButton');
+    const editFormContainer = document.getElementById('editFormContainer');
+    const cancelEditFormButton = document.getElementById('cancelEditFormButton');
+
+    editFormButtons.forEach(button => {
       button.addEventListener('click', function() {
-        document.getElementById('editFormContainer').classList.remove('hidden');
-        document.getElementById('editTurmaId').value = this.getAttribute('data-id');
-        document.getElementById('editNomeTurma').value = this.getAttribute('data-nome');
-        document.getElementById('editSerie').value = this.getAttribute('data-serie');
-        document.getElementById('editAno').value = this.getAttribute('data-ano');
-        document.getElementById('editForm').action = '/turmas/' + this.getAttribute('data-id');
+        const turmaId = this.getAttribute('data-id');
+        const nome = this.getAttribute('data-nome');
+        const serie = this.getAttribute('data-serie');
+        const ano = this.getAttribute('data-ano');
+
+        document.getElementById('editTurmaId').value = turmaId;
+        document.getElementById('editNomeTurma').value = nome;
+        document.getElementById('editSerie').value = serie;
+        document.getElementById('editAno').value = ano;
+
+        editFormContainer.classList.remove('hidden');
+
+        // Definir a ação do formulário de edição
+        document.getElementById('editForm').action = `/turmas/${turmaId}/update`;
       });
     });
-    document.getElementById('cancelEditFormButton').addEventListener('click', function() {
-      document.getElementById('editFormContainer').classList.add('hidden');
-    });
 
-    // Função para alternar a visibilidade do menu lateral
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.querySelector('.sidebar');
-    menuToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('sidebar-hidden');
-        sidebar.classList.toggle('sidebar-visible');
+    cancelEditFormButton.addEventListener('click', function() {
+      editFormContainer.classList.add('hidden');
     });
   </script>
+
 </body>
 </html>

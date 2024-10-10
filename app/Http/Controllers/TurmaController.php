@@ -9,65 +9,62 @@ class TurmaController extends Controller
 {
     // Método para exibir as turmas
     public function index()
-    {
-        $turmas = Turma::all()->groupBy('serie');
-        return view('turmas', ['turmas' => $turmas]);
-    }
+{
+    $turmas = Turma::all()->groupBy('serie');
+    return view('turmas', compact('turmas'));
+}
 
-    // Método para armazenar uma nova turma
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nomeTurma' => 'required|string|max:255',
-            'serie' => 'required|integer',
-            'ano' => 'required|integer',
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'nomeTurma' => 'required|string|max:255',
+        'serie' => 'required|integer',
+        'ano' => 'required|integer',
+    ]);
 
-        $turma = new Turma;
-        $turma->nome_turma = $request->input('nomeTurma');
-        $turma->serie = $request->input('serie');
-        $turma->ano = $request->input('ano');
-        $turma->ativo = true;
-        $turma->save();
+    Turma::create([
+        'nome_turma' => $request->input('nomeTurma'),
+        'serie' => $request->input('serie'),
+        'ano' => $request->input('ano'),
+        'ativo' => true,
+    ]);
 
-        return redirect()->route('turmas.index');
-    }
+    return redirect()->route('turmas.index');
+}
 
-    // Método para atualizar uma turma existente
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nomeTurma' => 'required|string|max:255',
-            'serie' => 'required|integer',
-            'ano' => 'required|integer',
-        ]);
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'nomeTurma' => 'required|string|max:255',
+        'serie' => 'required|integer',
+        'ano' => 'required|integer',
+    ]);
 
-        $turma = Turma::findOrFail($id);
-        $turma->nome_turma = $request->input('nomeTurma');
-        $turma->serie = $request->input('serie');
-        $turma->ano = $request->input('ano');
-        $turma->save();
+    $turma = Turma::findOrFail($id);
+    $turma->update([
+        'nome_turma' => $request->input('nomeTurma'),
+        'serie' => $request->input('serie'),
+        'ano' => $request->input('ano'),
+    ]);
 
-        return redirect()->route('turmas.index');
-    }
+    return redirect()->route('turmas.index');
+}
 
-    // Método para inativar uma turma
-    public function inativar(Request $request)
-    {
-        $turma = Turma::findOrFail($request->input('turma_id'));
-        $turma->ativo = false;
-        $turma->save();
+public function inativar(Request $request)
+{
+    $turma = Turma::findOrFail($request->input('turma_id'));
+    $turma->ativo = false;
+    $turma->save();
 
-        return redirect()->route('turmas.index');
-    }
+    return redirect()->route('turmas.index');
+}
 
-    // Método para ativar uma turma
-    public function ativar($id)
-    {
-        $turma = Turma::findOrFail($id);
-        $turma->ativo = true;
-        $turma->save();
+public function ativar($id)
+{
+    $turma = Turma::findOrFail($id);
+    $turma->ativo = true;
+    $turma->save();
 
-        return redirect()->route('turmas.index');
-    }
+    return redirect()->route('turmas.index');
+}
 }

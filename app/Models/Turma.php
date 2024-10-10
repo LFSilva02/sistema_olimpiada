@@ -9,10 +9,10 @@ class Turma extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome'];
+    protected $fillable = ['serie', 'nome_turma'];
 
-    public function alunos()
+    public function premiados()
     {
-        return $this->hasMany(Aluno::class);
+        return $this->hasMany(Premiado::class);
     }
 }

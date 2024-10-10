@@ -13,12 +13,10 @@ Route::get('/', function () {
 
 //TURMAS
 Route::get('/turmas', [TurmaController::class, 'index'])->name('turmas.index');
-Route::post('/turmas', [TurmaController::class, 'store'])->name('turmas.store');
-Route::put('/turmas/{id}', [TurmaController::class, 'update'])->name('turmas.update');
+Route::post('/turmas/store', [TurmaController::class, 'store'])->name('turmas.store');
 Route::post('/turmas/inativar', [TurmaController::class, 'inativar'])->name('turmas.inativar');
-Route::put('/turmas/ativar/{id}', [TurmaController::class, 'ativar'])->name('turmas.ativar');
-Route::get('/turma/{id}/alunos', [TurmaController::class, 'getAlunos']);
-Route::get('/turmas/{id}', [TurmaController::class, 'show'])->name('turmas.show');
+Route::put('/turmas/{id}/ativar', [TurmaController::class, 'ativar'])->name('turmas.ativar');
+Route::put('/turmas/{id}/update', [TurmaController::class, 'update'])->name('turmas.update');
 
 //CONHECIMENTOS
 Route::get('/conhecimentos', [ConhecimentoController::class, 'index'])->name('conhecimentos.index');
@@ -47,4 +45,3 @@ Route::post('/premiados', [PremiadoController::class, 'store'])->name('premiados
 Route::put('/premiados/{id}', [PremiadoController::class, 'update'])->name('premiados.update');
 Route::put('/premiados/ativar/{id}', [PremiadoController::class, 'ativar'])->name('premiados.ativar');
 Route::post('/premiados/inativar', [PremiadoController::class, 'inativar'])->name('premiados.inativar');
-

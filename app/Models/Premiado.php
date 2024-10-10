@@ -9,15 +9,11 @@ class Premiado extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'aluno_id',
-        'olimpiada_id',
-        'medalha',
-    ];
+    protected $fillable = ['nomePremiado', 'medalha', 'turma_id', 'olimpiada_id'];
 
-    public function aluno()
+    public function turma()
     {
-        return $this->belongsTo(Aluno::class);
+        return $this->belongsTo(Turma::class);
     }
 
     public function olimpiada()
