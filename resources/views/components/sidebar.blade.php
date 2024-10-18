@@ -14,9 +14,6 @@
             </svg>
         </button>
     </div>
-    <div class="sidebar-item mt-20 py-2 px-4 hover:bg-blue-400 mb-7">
-        <a href="#" class="text-black">Próximas Olimpíadas</a>
-    </div>
     <div class="sidebar-item py-2 px-4 hover:bg-blue-400 mb-10">
         <a href="{{ route('conhecimentos.index') }}" class="text-black">Áreas de conhecimento</a>
     </div>

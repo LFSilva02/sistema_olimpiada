@@ -55,7 +55,6 @@ public function inativar(Request $request)
     $turma = Turma::findOrFail($request->input('turma_id'));
     $turma->ativo = false;
     $turma->save();
-
     return redirect()->route('turmas.index');
 }
 
@@ -64,7 +63,17 @@ public function ativar($id)
     $turma = Turma::findOrFail($id);
     $turma->ativo = true;
     $turma->save();
-
     return redirect()->route('turmas.index');
 }
+
+public function getAlunos($id) {
+    $turma = Turma::find($id);
+    if ($turma) {
+        $alunos = $turma->alunos; // Assumindo que a relação 'alunos' está definida no modelo Turma
+        return response()->json(['alunos' => $alunos]);
+    } else {
+        return response()->json(['error' => 'Turma não encontrada'], 404);
+    }
+}
+
 }

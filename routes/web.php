@@ -17,6 +17,8 @@ Route::post('/turmas/store', [TurmaController::class, 'store'])->name('turmas.st
 Route::post('/turmas/inativar', [TurmaController::class, 'inativar'])->name('turmas.inativar');
 Route::put('/turmas/{id}/ativar', [TurmaController::class, 'ativar'])->name('turmas.ativar');
 Route::put('/turmas/{id}/update', [TurmaController::class, 'update'])->name('turmas.update');
+//Route::get('/turmas/{id}/alunos', [AlunoController::class, 'showAlunosDaTurma']);
+//Route::get('/turmas/{id}/alunos', [TurmaController::class, 'getAlunos']);
 
 //CONHECIMENTOS
 Route::get('/conhecimentos', [ConhecimentoController::class, 'index'])->name('conhecimentos.index');
@@ -35,9 +37,9 @@ Route::post('/olimpiadas/inativar', [OlimpiadaController::class, 'inativar'])->n
 Route::get('/alunos', [AlunoController::class, 'index'])->name('alunos.index');
 Route::post('/alunos', [AlunoController::class, 'store'])->name('alunos.store');
 Route::put('/alunos/{id}', [AlunoController::class, 'update'])->name('alunos.update');
-Route::post('/alunos/inativar', [AlunoController::class, 'inativar'])->name('alunos.inativar');
-Route::put('/alunos/ativar/{id}', [AlunoController::class, 'ativar'])->name('alunos.ativar');
-Route::get('/turmas/{id}/alunos', [AlunoController::class, 'alunosDaTurma']);
+Route::get('/turmas/{turma}/alunos', [AlunoController::class, 'alunosDaTurma'])->name('turmas.alunos');
+Route::get('/alunos/{id}/ativar', [AlunoController::class, 'ativar'])->name('alunos.ativar');
+Route::get('/alunos/{id}/inativar', [AlunoController::class, 'inativar'])->name('alunos.inativar');
 
 //PREMIADOS
 Route::get('/premiados', [PremiadoController::class, 'index'])->name('premiados.index');
