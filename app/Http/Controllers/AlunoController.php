@@ -55,23 +55,21 @@ class AlunoController extends Controller
         return redirect()->back()->with('success', 'Aluno inativado com sucesso!');
     }
 
-    public function edit($id) {
-        $aluno = Aluno::findOrFail($id);
-        $turmas = Turma::all();
-        return view('alunos.editar', compact('aluno', 'turmas'));
-    }
-
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nome' => 'required',
-            'turma_id' => 'required|exists:turmas,id',
-            'ativo' => 'required|boolean',
-        ]);
+{
+    $aluno = Aluno::findOrFail($id);
 
-        $aluno = Aluno::findOrFail($id);
-        $aluno->update($request->all());
+    $aluno->nome = $request->input('nome');
 
-        return redirect()->route('turmas.alunos', ['turma' => $request->turma_id])->with('success', 'Aluno atualizado com sucesso.');
-    }
+    // Agora, em vez de buscar pelo nome da turma, você pega o ID diretamente:
+    $aluno->turma_id = $request->input('turma_nome'); // Aqui você pega o ID da turma selecionada
+
+    $aluno->ativo = $request->input('ativo');
+
+    $aluno->save();
+
+    return redirect()->route('turmas.alunos', ['turma' => $aluno->turma_id])
+                     ->with('success', 'Aluno atualizado com sucesso.');
+}
+
 }
