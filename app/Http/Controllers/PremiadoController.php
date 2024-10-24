@@ -2,47 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aluno;
 use App\Models\Premiado;
-use App\Models\Turma;
 use App\Models\Olimpiada;
+use App\Models\Turma;
 use Illuminate\Http\Request;
 
 class PremiadoController extends Controller
 {
-    // Método para listar todos os premiados
     public function index()
     {
-        $premiados = Premiado::all(); // Buscar todos os premiados
-        $turmas = Turma::all(); // Buscar todas as turmas
-        $olimpiadas = Olimpiada::all(); // Buscar todas as olimpíadas
-        return view('premiados', compact('premiados', 'turmas', 'olimpiadas'));
-    }
-    // Método para mostrar o formulário de criação de premiado
-    public function create()
-    {
-        $turmas = Turma::all(); // Buscar todas as turmas
-        $olimpiadas = Olimpiada::all(); // Buscar todas as olimpíadas
-        return view('premiados.create', compact('turmas', 'olimpiadas'));
+        $alunos = Aluno::with('turma')->get();
+        $premiados = Premiado::all();
+        $olimpiadas = Olimpiada::all();
+        return view('premiados', compact('premiados', 'olimpiadas', 'alunos'));
     }
 
-    // Método para salvar o premiado no banco de dados
-    public function store(Request $request)
+    public function cadastrarPremiado(Request $request)
     {
-        $validatedData = $request->validate([
-            'nomePremiado' => 'required|string|max:255',
+        $request->validate([
+            'aluno_id' => 'required|exists:alunos,id',
+            'premiado_id' => 'required|exists:premiados,id',
             'medalha' => 'required|string',
-            'turma' => 'required|exists:turmas,id',
-            'olimpiada' => 'required|exists:olimpiadas,id',
+            'ativo' => 'required|boolean',
         ]);
 
-        $premiado = new Premiado();
-        $premiado->nomePremiado = $validatedData['nomePremiado'];
-        $premiado->medalha = $validatedData['medalha'];
-        $premiado->turma_id = $validatedData['turma'];
-        $premiado->olimpiada_id = $validatedData['olimpiada'];
-
-        $premiado->save();
+        Premiado::create($request->all());
 
         return redirect()->route('premiados.index')->with('success', 'Premiado cadastrado com sucesso!');
     }
+    public function inativar(Request $request)
+    {
+        $id = $request->input('premiado_id');
+        $premiado = Premiado::find($id);
+
+        if ($premiado) {
+            $premiado->ativo = 0;
+            $premiado->save();
+        }
+
+        return redirect()->route('premiados.index')->with('success', 'Premiado inativada com sucesso');
+    }
+
+    public function ativar(Request $request, $id)
+    {
+        $premiado = Premiado::find($id);
+
+        if ($premiado) {
+            $premiado->ativo = 1;
+            $premiado->save();
+        }
+
+        return redirect()->route('premiados.index')->with('success', 'Premiado ativada com sucesso');
+    }
+
 }
