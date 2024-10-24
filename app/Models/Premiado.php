@@ -9,11 +9,12 @@ class Premiado extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nomePremiado', 'medalha', 'turma_id', 'olimpiada_id'];
+    protected $table = 'premiados';
+    protected $fillable = ['aluno_id', 'medalha', 'olimpiada_id', 'ativo'];
 
-    public function turma()
+    public function aluno()
     {
-        return $this->belongsTo(Turma::class);
+        return $this->belongsTo(Aluno::class);
     }
 
     public function olimpiada()
