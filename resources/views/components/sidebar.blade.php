@@ -6,10 +6,12 @@
 </button>
 
 <!-- Sidebar -->
-<div id="sidebar" class="sidebar z-10 bg-blue-300 text-white fixed top-0 left-0 h-screen w-64 transition-transform transform -translate-x-full">
+<div id="sidebar"
+    class="sidebar z-10 bg-blue-300 text-white fixed top-0 left-0 h-screen w-64 transition-transform transform -translate-x-full">
     <div class="flex justify-end p-4">
         <button id="closeSidebar" class="text-black">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
@@ -33,7 +35,7 @@
 
 <!-- Script para manipulação do sidebar -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const sidebar = document.getElementById('sidebar');
         const closeSidebarButton = document.getElementById('closeSidebar');
         const openSidebarButton = document.getElementById('openSidebar');
@@ -51,12 +53,12 @@
         }
 
         // Evento para fechar o sidebar ao clicar no botão
-        closeSidebarButton.addEventListener('click', function () {
+        closeSidebarButton.addEventListener('click', function() {
             closeSidebar();
         });
 
         // Evento para abrir o sidebar ao clicar no botão
-        openSidebarButton.addEventListener('click', function () {
+        openSidebarButton.addEventListener('click', function() {
             openSidebar();
         });
     });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css">
 </head>
+
 <body class="bg-white">
 
     <div class="container mx-auto p-4">
@@ -24,21 +26,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($alunos as $aluno)
-                    <tr>
-                        <td class="py-2 px-4 border-b">{{ $aluno->nome }}</td>
-                        <td class="py-2 px-4 border-b">{{ $aluno->turma->nome_turma }}</td>
-                        <td class="py-2 px-4 border-b">{{ $aluno->ativo ? 'Sim' : 'Não' }}</td>
-                        <td class="py-2 px-4 border-b">
-                            <button class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded openEditFormButton"
-                                    data-id="{{ $aluno->id }}"
-                                    data-nome="{{ $aluno->nome }}"
-                                    data-turma="{{$aluno->turma->turma_id}}"
-                                    data-ativo="{{ $aluno->ativo }}">
-                                Editar
-                            </button>
-                        </td>
-                    </tr>
+                    @foreach ($alunos as $aluno)
+                        <tr>
+                            <td class="py-2 px-4 border-b">{{ $aluno->nome }}</td>
+                            <td class="py-2 px-4 border-b">{{ $aluno->turma->nome_turma }}</td>
+                            <td class="py-2 px-4 border-b">{{ $aluno->ativo ? 'Sim' : 'Não' }}</td>
+                            <td class="py-2 px-4 border-b">
+                                <button
+                                    class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded openEditFormButton"
+                                    data-id="{{ $aluno->id }}" data-nome="{{ $aluno->nome }}"
+                                    data-turma="{{ $aluno->turma->turma_id }}" data-ativo="{{ $aluno->ativo }}">
+                                    Editar
+                                </button>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -55,13 +56,17 @@
                 <input type="hidden" id="alunoId" name="aluno_id" value="">
                 <div class="mb-4">
                     <label for="nomeAluno" class="block text-sm font-medium text-gray-700">Nome do Aluno</label>
-                    <input type="text" name="nome" id="nomeAluno" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="text" name="nome" id="nomeAluno"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required>
                 </div>
                 <div class="mb-4">
                     <label for="turma_nome" class="block text-sm font-medium text-gray-700">Turma</label>
-                    <select name="turma_nome" id="turma_nome" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <select name="turma_nome" id="turma_nome"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required>
                         <option value="">Selecione uma turma</option>
-                        @foreach($turmas as $turma)
+                        @foreach ($turmas as $turma)
                             <option value="{{ $turma->id }}" {{ $aluno->turma_id == $turma->id ? 'selected' : '' }}>
                                 {{ $turma->nome_turma }}
                             </option>
@@ -70,14 +75,18 @@
                 </div>
                 <div class="mb-4">
                     <label for="ativo" class="block text-sm font-medium text-gray-700">Ativo</label>
-                    <select name="ativo" id="ativo" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <select name="ativo" id="ativo"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required>
                         <option value="1">Sim</option>
                         <option value="0">Não</option>
                     </select>
                 </div>
                 <div class="flex justify-between">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Salvar</button>
-                    <button type="button" id="cancelFormButton" class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Salvar</button>
+                    <button type="button" id="cancelFormButton"
+                        class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded">Cancelar</button>
                 </div>
             </form>
         </div>
@@ -115,4 +124,5 @@
         });
     </script>
 </body>
+
 </html>
