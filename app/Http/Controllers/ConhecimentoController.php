@@ -22,8 +22,8 @@ class ConhecimentoController extends Controller
 
         // Verifica se já existe um conhecimento com o mesmo nome e descrição
         $exists = Conhecimento::where('nome_conhecimento', $request->nome_conhecimento)
-                              ->where('descricao', $request->descricao)
-                              ->exists();
+            ->where('descricao', $request->descricao)
+            ->exists();
 
         if ($exists) {
             return redirect()->back()->with('error', 'Um conhecimento com o mesmo nome e descrição já existe.');
@@ -54,5 +54,19 @@ class ConhecimentoController extends Controller
         $conhecimento->save();
 
         return redirect()->route('conhecimentos.index');
+    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nome_conhecimento' => 'required|string|max:255',
+            'descricao' => 'required|string|max:255',
+        ]);
+
+        $conhecimento = Conhecimento::findOrFail($id);
+        $conhecimento->nome_conhecimento = $request->nome_conhecimento;
+        $conhecimento->descricao = $request->descricao;
+        $conhecimento->save();
+
+        return redirect()->route('conhecimentos.index')->with('success', 'Área de conhecimento atualizada com sucesso!');
     }
 }
