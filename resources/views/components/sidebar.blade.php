@@ -20,16 +20,16 @@
         <a href="{{ route('conhecimentos.index') }}" class="text-black">Áreas de conhecimento</a>
     </div>
     <div class="sidebar-item py-2 px-4 hover:bg-blue-400 mb-10">
-        <a href="{{ route('premiados.index') }}" class="text-black">Premiados</a>
+        <a href="{{ route('olimpiadas.index') }}" class="text-black">Olimpíadas</a>
     </div>
     <div class="sidebar-item py-2 px-4 hover:bg-blue-400 mb-10">
         <a href="{{ route('turmas.index') }}" class="text-black">Turmas</a>
     </div>
     <div class="sidebar-item py-2 px-4 hover:bg-blue-400 mb-10">
-        <a href="{{ route('olimpiadas.index') }}" class="text-black">Olimpíadas</a>
+        <a href="{{ route('alunos.index') }}" class="text-black">Alunos</a>
     </div>
     <div class="sidebar-item py-2 px-4 hover:bg-blue-400 mb-10">
-        <a href="{{ route('alunos.index') }}" class="text-black">Alunos</a>
+        <a href="{{ route('premiados.index') }}" class="text-black">Premiados</a>
     </div>
 </div>
 
