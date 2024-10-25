@@ -55,10 +55,10 @@
                 <div class="inline-block text-center">
                     <h2 class="text-2xl font-bold mb-4">Série: {{ $serie }}</h2>
                     @foreach ($turmasPorSerie as $turma)
-                        <h3 class="text-xl font-semibold mb-2 cursor-pointer text-blue-500 hover:underline"
-                            onclick="window.location='{{ route('turmas.alunos', $turma->id) }}'">
-                            Turma: {{ $turma->nome_turma }}
-                        </h3>
+                    <div><h3 class="text-xl font-semibold mb-2 cursor-pointer text-blue-500 hover:underline"
+                        onclick="window.location='{{ route('turmas.alunos', $turma->id) }}'">
+                        Turma: {{ $turma->nome_turma }}
+                    </h3></div>
                     @endforeach
                 </div>
             @endforeach

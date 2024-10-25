@@ -98,19 +98,19 @@
             <form id="form" action="{{ route('turmas.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="nomeTurma" class="block text-sm font-medium text-gray-700">Nome da Turma</label>
+                    <label for="nomeTurma" class="block text-sm font-medium text-gray-700">Nome da Turma*</label>
                     <input type="text" name="nomeTurma" id="nomeTurma"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
                 <div class="mb-4">
-                    <label for="serie" class="block text-sm font-medium text-gray-700">Série</label>
+                    <label for="serie" class="block text-sm font-medium text-gray-700">Série*</label>
                     <input type="text" name="serie" id="serie"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
                 <div class="mb-4">
-                    <label for="ano" class="block text-sm font-medium text-gray-700">Ano</label>
+                    <label for="ano" class="block text-sm font-medium text-gray-700">Ano*</label>
                     <input type="text" name="ano" id="ano"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
                 <div class="flex justify-between">
                     <button type="submit"
@@ -131,19 +131,19 @@
                 @method('PUT')
                 <input type="hidden" name="turma_id" id="editTurmaId">
                 <div class="mb-4">
-                    <label for="editNomeTurma" class="block text-sm font-medium text-gray-700">Nome da Turma</label>
+                    <label for="editNomeTurma" class="block text-sm font-medium text-gray-700">Nome da Turma*</label>
                     <input type="text" name="nomeTurma" id="editNomeTurma"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
                 <div class="mb-4">
-                    <label for="editSerie" class="block text-sm font-medium text-gray-700">Série</label>
+                    <label for="editSerie" class="block text-sm font-medium text-gray-700">Série*</label>
                     <input type="text" name="serie" id="editSerie"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
                 <div class="mb-4">
-                    <label for="editAno" class="block text-sm font-medium text-gray-700">Ano</label>
+                    <label for="editAno" class="block text-sm font-medium text-gray-700">Ano*</label>
                     <input type="text" name="ano" id="editAno"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
                 <div class="flex justify-between">
                     <button type="submit"

@@ -101,14 +101,14 @@
             <form id="form" action="{{ route('conhecimentos.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="nomeConhecimento" class="block text-sm font-medium text-gray-700">Nome da Área</label>
+                    <label for="nomeConhecimento" class="block text-sm font-medium text-gray-700">Nome da Área*</label>
                     <input type="text" name="nome_conhecimento" id="nomeConhecimento"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
                 <div class="mb-4">
-                    <label for="descricao" class="block text-sm font-medium text-gray-700">Descrição</label>
+                    <label for="descricao" class="block text-sm font-medium text-gray-700">Descrição*</label>
                     <input type="text" name="descricao" id="descricao"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
                 <div class="flex justify-between">
                     <button type="submit"
@@ -129,14 +129,14 @@
                 @method('PUT')
                 <input type="hidden" name="conhecimento_id" id="editConhecimentoId">
                 <div class="mb-4">
-                    <label for="editNomeConhecimento" class="block text-sm font-medium text-gray-700">Nome da Área</label>
+                    <label for="editNomeConhecimento" class="block text-sm font-medium text-gray-700">Nome da Área*</label>
                     <input type="text" name="nome_conhecimento" id="editNomeConhecimento"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
                 <div class="mb-4">
-                    <label for="editDescricao" class="block text-sm font-medium text-gray-700">Descrição</label>
+                    <label for="editDescricao" class="block text-sm font-medium text-gray-700">Descrição*</label>
                     <input type="text" name="descricao" id="editDescricao"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
                 <div class="flex justify-between">
                     <button type="submit"

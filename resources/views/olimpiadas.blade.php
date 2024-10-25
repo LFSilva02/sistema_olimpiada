@@ -114,33 +114,33 @@
             <form id="form" action="{{ route('olimpiadas.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="nomeOlimpiada" class="block text-sm font-medium text-gray-700">Nome da Olimpíada</label>
+                    <label for="nomeOlimpiada" class="block text-sm font-medium text-gray-700">Nome da Olimpíada*</label>
                     <input type="text" name="nome_olimpiada" id="nomeOlimpiada"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
                         <label for="dataOlimpiada" class="block text-sm font-medium text-gray-700">Data da
-                            Olimpíada</label>
+                            Olimpíada*</label>
                         <input type="date" name="data_olimpiada" id="dataOlimpiada"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                     </div>
                     <div>
-                        <label for="horario" class="block text-sm font-medium text-gray-700">Horário</label>
+                        <label for="horario" class="block text-sm font-medium text-gray-700">Horário*</label>
                         <input type="time" name="horario" id="horario"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label for="local" class="block text-sm font-medium text-gray-700">Local</label>
+                        <label for="local" class="block text-sm font-medium text-gray-700">Local*</label>
                         <input type="text" name="local" id="local"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                     </div>
                     <div>
-                        <label for="sala" class="block text-sm font-medium text-gray-700">Sala</label>
+                        <label for="sala" class="block text-sm font-medium text-gray-700">Sala*</label>
                         <input type="text" name="sala" id="sala"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                     </div>
                 </div>
                 <div class="form-footer">
@@ -162,33 +162,33 @@
                 @method('PUT')
                 <div class="mb-4">
                     <label for="editNomeOlimpiada" class="block text-sm font-medium text-gray-700">Nome da
-                        Olimpíada</label>
+                        Olimpíada*</label>
                     <input type="text" name="nome_olimpiada" id="editNomeOlimpiada"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
                         <label for="editDataOlimpiada" class="block text-sm font-medium text-gray-700">Data da
-                            Olimpíada</label>
+                            Olimpíada*</label>
                         <input type="date" name="data_olimpiada" id="editDataOlimpiada"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                     </div>
                     <div>
-                        <label for="editHorario" class="block text-sm font-medium text-gray-700">Horário</label>
+                        <label for="editHorario" class="block text-sm font-medium text-gray-700">Horário*</label>
                         <input type="time" name="horario" id="editHorario"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label for="editLocal" class="block text-sm font-medium text-gray-700">Local</label>
+                        <label for="editLocal" class="block text-sm font-medium text-gray-700">Local*</label>
                         <input type="text" name="local" id="editLocal"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                     </div>
                     <div>
-                        <label for="editSala" class="block text-sm font-medium text-gray-700">Sala</label>
+                        <label for="editSala" class="block text-sm font-medium text-gray-700">Sala*</label>
                         <input type="text" name="sala" id="editSala"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                     </div>
                 </div>
                 <div class="form-footer">
