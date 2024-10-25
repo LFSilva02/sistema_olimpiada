@@ -61,14 +61,12 @@ class AlunoController extends Controller
 
     $aluno->nome = $request->input('nome');
 
-    // Agora, em vez de buscar pelo nome da turma, você pega o ID diretamente:
-    $aluno->turma_id = $request->input('turma_nome'); // Aqui você pega o ID da turma selecionada
 
     $aluno->ativo = $request->input('ativo');
 
     $aluno->save();
 
-    return redirect()->route('turmas.alunos', ['turma' => $aluno->turma_id])
+    return redirect()->route('alunos.index', ['turma' => $aluno->turma_id])
                      ->with('success', 'Aluno atualizado com sucesso.');
 }
 

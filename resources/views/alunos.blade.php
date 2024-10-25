@@ -25,8 +25,7 @@
 <body class="bg-white">
 
     <!-- Cabeçalho -->
-    <div
-        class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-between items-center px-4">
+    <div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-between items-center px-4">
         <button id="menuToggle" class="text-white"></button>
         <div class="flex items-center space-x-4">
             <img src="{{ asset('storage/img/colegiolondrinense.png') }}" alt="Logo" class="h-14">
@@ -49,16 +48,21 @@
         </div>
     </div>
 
-    <!-- Listagem de Turmas -->
+    <!-- Listagem de Turmas com Scroll Horizontal e Centralização -->
     <div class="container mx-auto px-4">
-        @foreach ($turmas->groupBy('serie') as $serie => $turmasPorSerie)
-            <h2 class="text-2xl font-bold my-4">Série: {{ $serie }}</h2>
-            @foreach ($turmasPorSerie as $turma)
-                <h3 class="text-xl font-semibold mt-4 mb-2 cursor-pointer text-blue-500 hover:underline"
-                    onclick="window.location='{{ route('turmas.alunos', $turma->id) }}'">Turma: {{ $turma->nome_turma }}
-                </h3>
+        <div class="overflow-x-auto whitespace-nowrap flex justify-center space-x-36">
+            @foreach ($turmas->groupBy('serie') as $serie => $turmasPorSerie)
+                <div class="inline-block text-center">
+                    <h2 class="text-2xl font-bold mb-4">Série: {{ $serie }}</h2>
+                    @foreach ($turmasPorSerie as $turma)
+                        <h3 class="text-xl font-semibold mb-2 cursor-pointer text-blue-500 hover:underline"
+                            onclick="window.location='{{ route('turmas.alunos', $turma->id) }}'">
+                            Turma: {{ $turma->nome_turma }}
+                        </h3>
+                    @endforeach
+                </div>
             @endforeach
-        @endforeach
+        </div>
     </div>
 
     <!-- Formulário para cadastrar alunos -->

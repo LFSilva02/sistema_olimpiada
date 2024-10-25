@@ -17,14 +17,15 @@ Route::post('/turmas/store', [TurmaController::class, 'store'])->name('turmas.st
 Route::post('/turmas/inativar', [TurmaController::class, 'inativar'])->name('turmas.inativar');
 Route::put('/turmas/{id}/ativar', [TurmaController::class, 'ativar'])->name('turmas.ativar');
 Route::put('/turmas/{id}/update', [TurmaController::class, 'update'])->name('turmas.update');
-//Route::get('/turmas/{id}/alunos', [AlunoController::class, 'showAlunosDaTurma']);
-//Route::get('/turmas/{id}/alunos', [TurmaController::class, 'getAlunos']);
+
 
 //CONHECIMENTOS
 Route::get('/conhecimentos', [ConhecimentoController::class, 'index'])->name('conhecimentos.index');
 Route::post('/conhecimentos', [ConhecimentoController::class, 'store'])->name('conhecimentos.store');
 Route::post('/conhecimentos/inativar', [ConhecimentoController::class, 'inativar'])->name('conhecimentos.inativar');
 Route::put('/conhecimentos/ativar/{id}', [ConhecimentoController::class, 'ativar'])->name('conhecimentos.ativar');
+Route::put('/conhecimentos/{id}', [ConhecimentoController::class, 'update'])->name('conhecimentos.update');
+
 
 //OLIMPÍADAS
 Route::get('olimpiadas', [OlimpiadaController::class, 'index'])->name('olimpiadas.index');
@@ -43,7 +44,7 @@ Route::get('/alunos/{id}/inativar', [AlunoController::class, 'inativar'])->name(
 
 //PREMIADOS
 Route::get('/premiados', [PremiadoController::class, 'index'])->name('premiados.index');
-Route::post('/premiados', [PremiadoController::class, 'store'])->name('premiados.store');
+Route::post('/premiados', [PremiadoController::class, 'cadastrarPremiado'])->name('premiados.store');
 Route::put('/premiados/{id}', [PremiadoController::class, 'update'])->name('premiados.update');
 Route::put('/premiados/ativar/{id}', [PremiadoController::class, 'ativar'])->name('premiados.ativar');
 Route::post('/premiados/inativar', [PremiadoController::class, 'inativar'])->name('premiados.inativar');
