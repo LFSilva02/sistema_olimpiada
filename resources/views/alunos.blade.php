@@ -55,10 +55,15 @@
                 <div class="inline-block text-center">
                     <h2 class="text-2xl font-bold mb-4">Série: {{ $serie }}</h2>
                     @foreach ($turmasPorSerie as $turma)
-                    <div><h3 class="text-xl font-semibold mb-2 cursor-pointer text-blue-500 hover:underline"
+                    <div>
+                        {{-- <h3 class="text-xl font-semibold mb-2 cursor-pointer text-blue-500 hover:underline"
                         onclick="window.location='{{ route('turmas.alunos', $turma->id) }}'">
                         Turma: {{ $turma->nome_turma }}
-                    </h3></div>
+                    </h3> --}}
+                    <h3 class="text-xl font-semibold mb-2 cursor-pointer text-blue-500 hover:underline"
+                    onclick="checkTurma('{{ $turma->id }}', {{ $turma->alunos->count() }})">
+                    Turma: {{ $turma->nome_turma }}
+                </h3></div>
                     @endforeach
                 </div>
             @endforeach
@@ -73,12 +78,12 @@
                 @csrf
                 <div class="mb-4">
                     <label for="nomeAluno" class="block text-sm font-medium text-gray-700">Nome do Aluno</label>
-                    <input type="text" name="nome" id="nomeAluno"
+                    <input type="text" name="nome" id="nomeAluno" required
                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
                 <div class="mb-4">
                     <label for="turma_id" class="block text-sm font-medium text-gray-700">Turma</label>
-                    <select name="turma_id" id="turma_id"
+                    <select name="turma_id" id="turma_id" required
                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         @foreach ($turmas as $turma)
                             <option value="{{ $turma->id }}">{{ $turma->nome_turma }}</option>
@@ -87,7 +92,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="ativo" class="block text-sm font-medium text-gray-700">Ativo</label>
-                    <select name="ativo" id="ativo"
+                    <select name="ativo" id="ativo" required
                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="1">Sim</option>
                         <option value="0">Não</option>
@@ -102,7 +107,17 @@
             </form>
         </div>
     </div>
+<!-- Mensagem de Turma Vazia -->
+<div id="emptyMessage" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="relative bg-white p-8 rounded-lg shadow-lg w-1/3 text-center">
+        <!-- Botão de Fechar (X) -->
+        <button id="closeEmptyMessageButton" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 font-bold text-2xl">&times;</button>
 
+        <!-- Conteúdo do Modal -->
+        <h2 class="text-xl font-bold mb-4">Nenhum aluno cadastrado nesta turma</h2>
+        <button id="addStudentButton" class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Cadastrar Aluno</button>
+    </div>
+</div>
     <!-- Rodapé -->
     <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
         <div class="container mx-auto">
@@ -112,6 +127,26 @@
     </footer>
 
     <script>
+       function checkTurma(turmaId, alunoCount) {
+        if (alunoCount === 0) {
+            document.getElementById('emptyMessage').classList.remove('hidden');
+
+            // Função para abrir o formulário ao clicar no botão "Cadastrar Aluno"
+            document.getElementById('addStudentButton').onclick = function() {
+                document.getElementById('emptyMessage').classList.add('hidden');
+                document.getElementById('formContainer').classList.remove('hidden');
+            };
+
+            // Função para fechar o modal ao clicar no "X"
+            document.getElementById('closeEmptyMessageButton').onclick = function() {
+                document.getElementById('emptyMessage').classList.add('hidden');
+            };
+        } else {
+            window.location = `/turmas/${turmaId}/alunos`;
+        }
+    }
+
+
         document.getElementById('menuToggle').addEventListener('click', function() {
             const sidebar = document.querySelector('.sidebar');
             sidebar.classList.toggle('sidebar-hidden');
@@ -124,6 +159,17 @@
 
         document.getElementById('cancelFormButton').addEventListener('click', function() {
             document.getElementById('formContainer').classList.add('hidden');
+        });
+
+        // Exibe uma mensagem se a turma está vazia
+        const turmas = document.querySelectorAll('.turma');
+        turmas.forEach(turma => {
+            turma.addEventListener('click', function() {
+                const alunos = turma.querySelector('.alunos');
+                if (!alunos || alunos.children.length === 0) {
+                    alert("Esta turma não possui alunos cadastrados.");
+                }
+            });
         });
     </script>
 </body>

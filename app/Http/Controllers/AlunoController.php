@@ -59,15 +59,25 @@ class AlunoController extends Controller
 {
     $aluno = Aluno::findOrFail($id);
 
+    $request->validate([
+        'nome' => 'required',
+        'turma_id' => 'required|exists:turmas,id',
+        'ativo' => 'required|boolean',
+    ]);
+
     $aluno->nome = $request->input('nome');
-
-
+    $aluno->turma_id = $request->input('turma_id'); // Adicione esta linha
     $aluno->ativo = $request->input('ativo');
 
     $aluno->save();
 
-    return redirect()->route('alunos.index', ['turma' => $aluno->turma_id])
-                     ->with('success', 'Aluno atualizado com sucesso.');
+    return redirect()->route('alunos.index')->with('success', 'Aluno atualizado com sucesso.');
 }
+    public function edit($id)
+    {
+        $aluno = Aluno::with('turma')->findOrFail($id);
+        $turmas = Turma::all();        $turma = Turma::findOrFail($id); $alunos = Aluno::with('turma')->get();
 
+        return view('alunos_da_turma', compact('aluno', 'turmas', 'turma'));
+    }
 }

@@ -41,10 +41,11 @@ Route::put('/alunos/{id}', [AlunoController::class, 'update'])->name('alunos.upd
 Route::get('/turmas/{turma}/alunos', [AlunoController::class, 'alunosDaTurma'])->name('turmas.alunos');
 Route::get('/alunos/{id}/ativar', [AlunoController::class, 'ativar'])->name('alunos.ativar');
 Route::get('/alunos/{id}/inativar', [AlunoController::class, 'inativar'])->name('alunos.inativar');
+Route::get('alunos/{id}/edit', [AlunoController::class, 'edit'])->name('alunos.edit');
 
 //PREMIADOS
 Route::get('/premiados', [PremiadoController::class, 'index'])->name('premiados.index');
 Route::post('/premiados', [PremiadoController::class, 'cadastrarPremiado'])->name('premiados.store');
 Route::put('/premiados/{id}', [PremiadoController::class, 'update'])->name('premiados.update');
-Route::put('/premiados/ativar/{id}', [PremiadoController::class, 'ativar'])->name('premiados.ativar');
 Route::post('/premiados/inativar', [PremiadoController::class, 'inativar'])->name('premiados.inativar');
+Route::put('/premiados/ativar/{id}', [PremiadoController::class, 'ativar'])->name('premiados.ativar');

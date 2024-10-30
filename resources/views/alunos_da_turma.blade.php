@@ -7,15 +7,41 @@
     <title>Gerenciar Alunos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css">
+    <style>
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-visible {
+            transform: translateX(0);
+        }
+
+        .transition-transform {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
 </head>
 
 <body class="bg-white">
 
+    <!-- Cabeçalho -->
+    <div
+        class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-between items-center px-4">
+        <button id="menuToggle" class="text-white"></button>
+        <div class="flex items-center space-x-4">
+            <img src="{{ asset('storage/img/colegiolondrinense.png') }}" alt="Logo" class="h-14">
+            <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
+        </div>
+        <div></div>
+    </div>
+
+    @include('components.sidebar')
+
     <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-4">Lista de Alunos</h1>
+        <h1 class="text-2xl font-bold mb-4 mt-18">Lista de Alunos</h1>
 
         <!-- Lista de alunos com botão de editar -->
-        <div class="mb-4">
+        <div class="mb-4 mt-16">
             <table class="min-w-full bg-white">
                 <thead>
                     <tr>
@@ -35,7 +61,7 @@
                                 <button
                                     class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded openEditFormButton"
                                     data-id="{{ $aluno->id }}" data-nome="{{ $aluno->nome }}"
-                                    data-turma="{{ $aluno->turma->turma_id }}" data-ativo="{{ $aluno->ativo }}">
+                                    data-turma="{{ $aluno->turma_id }}" data-ativo="{{ $aluno->ativo }}">
                                     Editar
                                 </button>
                             </td>
@@ -60,12 +86,12 @@
                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required>
                 </div>
+
                 <div class="mb-4">
                     <label for="turma_nome" class="block text-sm font-medium text-gray-700">Turma</label>
-                    <select name="turma_nome" id="turma_nome"
+                    <select name="turma_id" id="turma_nome"
                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required>
-                        <option value="">Selecione uma turma</option>
                         @foreach ($turmas as $turma)
                             <option value="{{ $turma->id }}" {{ $aluno->turma_id == $turma->id ? 'selected' : '' }}>
                                 {{ $turma->nome_turma }}
@@ -73,6 +99,7 @@
                         @endforeach
                     </select>
                 </div>
+
                 <div class="mb-4">
                     <label for="ativo" class="block text-sm font-medium text-gray-700">Ativo</label>
                     <select name="ativo" id="ativo"
@@ -91,7 +118,13 @@
             </form>
         </div>
     </div>
-
+    <!-- Rodapé -->
+    <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
+        <div class="container mx-auto">
+            <p class="text-sm">&copy; {{ date('Y') }} Olimpíadas Científicas Colégio Londrinense. Todos os direitos
+                reservados.</p>
+        </div>
+    </footer>
     <script>
         const editFormButtons = document.querySelectorAll('.openEditFormButton');
         const formContainer = document.getElementById('formContainer');
@@ -100,26 +133,23 @@
             button.addEventListener('click', function() {
                 const alunoId = this.getAttribute('data-id');
                 const nomeAluno = this.getAttribute('data-nome');
-                const turma_nome = this.getAttribute('data-turma');
+                const turmaId = this.getAttribute('data-turma');
                 const ativoAluno = this.getAttribute('data-ativo');
 
 
-                // Preenche os campos do formulário com os dados do aluno
-                document.getElementById('alunoId').value = alunoId;
+                // document.getElementById('alunoId').value = alunoId;
                 document.getElementById('nomeAluno').value = this.getAttribute('data-nome');
-                document.getElementById('turma_nome').value = turma_nome;
+                // document.getElementById('turma_nome').value = turma_nome;
                 document.getElementById('ativo').value = ativoAluno;
 
-                // Exibe o formulário
                 formContainer.classList.remove('hidden');
-
-                // Define a ação do formulário para o ID do aluno
+                const turmaSelect = document.getElementById('turma_nome');
+                turmaSelect.value = turmaId;
                 document.getElementById('editform').action = `/alunos/${alunoId}`;
             });
         });
 
         document.getElementById('cancelFormButton').addEventListener('click', function() {
-            // Fecha o formulário sem alterar nada
             formContainer.classList.add('hidden');
         });
     </script>
