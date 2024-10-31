@@ -45,7 +45,6 @@
         </div>
     </div>
 
-    <!-- Formulário para cadastrar/editar premiado -->
     <div id="formContainer" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
             <h2 id="formTitle" class="text-2xl font-bold mb-4">Cadastrar Novo Premiado</h2>
@@ -53,16 +52,6 @@
             <form id="form" action="{{ route('premiados.store') }}" method="POST">
                 @csrf
                 <input type="hidden" id="premiadoId" name="premiado_id" value="">
-
-                {{-- <div class="mb-4">
-                    <label for="aluno_id" class="block text-sm font-medium text-gray-700">Aluno</label>
-                    <select name="aluno_id" id="aluno_id"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
-                        @foreach ($alunos as $aluno)
-                            <option value="{{ $aluno->id }}">{{ $aluno->nome }}</option>
-                        @endforeach
-                    </select>
-                </div> --}}
                 <div class="mb-4">
                     <label for="serie" class="block text-sm font-medium text-gray-700">Série</label>
                     <select name="serie" id="serie"
@@ -85,28 +74,6 @@
                     required>
                     <option value="">Selecione um Aluno</option>
                 </select>
-                {{-- <!-- Adicionando campo de Turma -->
-                <div class="mb-4">
-                    <label for="turma_id" class="block text-sm font-medium text-gray-700">Turma</label>
-                    <select name="turma_id" id="turma_id"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
-                        @foreach ($turmas as $turma)
-                            <option value="{{ $turma->id }}">{{ $turma->nome_turma }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Adicionando campo de Série -->
-                <div class="mb-4">
-                    <label for="serie" class="block text-sm font-medium text-gray-700">Série</label>
-                    <select name="serie" id="serie"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
-                        <option value="1">1ª Série</option>
-                        <option value="2">2ª Série</option>
-                        <option value="3">3ª Série</option>
-                        <!-- Adicione mais opções conforme necessário -->
-                    </select>
-                </div> --}}
 
                 <div class="mb-4">
                     <label for="medalha" class="block text-sm font-medium text-gray-700">Medalha</label>
@@ -166,9 +133,8 @@
                         <div class="flex items-center ml-auto">
                             <button class="openEditFormButton bi bi-pencil mx-3" data-id="{{ $premiado->id }}"
                                 data-aluno="{{ $premiado->aluno_id }}" data-medalha="{{ $premiado->medalha }}"
-                                data-olimpiada="{{ $premiado->olimpiada_id }}"
-                                data-turma="{{ $premiado->turma_id }}" data-serie="{{ $premiado->serie }}"
-                                data-ativo="{{ $premiado->ativo }}">
+                                data-olimpiada="{{ $premiado->olimpiada_id }}" data-turma="{{ $premiado->turma_id }}"
+                                data-serie="{{ $premiado->serie }}" data-ativo="{{ $premiado->ativo }}">
                             </button>
                             @if ($premiado->ativo)
                                 <form action="{{ route('premiados.inativar') }}" method="POST">
@@ -221,7 +187,7 @@
                 document.getElementById('medalha').value = button.dataset.medalha;
                 document.getElementById('olimpiada_id').value = button.dataset.olimpiada;
                 document.getElementById('turma_id').value = button.dataset
-                    .turma; // Corrigido de 'turma' para 'turma_id'
+                    .turma;
                 document.getElementById('serie').value = button.dataset.serie;
                 document.getElementById('ativo').value = button.dataset.ativo;
                 document.getElementById('formContainer').classList.remove('hidden');
@@ -232,7 +198,7 @@
         document.getElementById('serie').addEventListener('change', function() {
             const serie = encodeURIComponent(this.value);
             if (serie) {
-                fetch(`/turmas/serie/${serie}`) // Substituímos {serie} por ${serie}
+                fetch(`/turmas/serie/${serie}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Erro HTTP! status: ${response.status}');
@@ -258,7 +224,7 @@
         document.getElementById('turma').addEventListener('change', function() {
             const turmaId = this.value;
             if (turmaId) {
-                fetch(`/alunos/turma/${turmaId}`) // API para buscar alunos da turma selecionada
+                fetch(`/alunos/turma/${turmaId}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Erro HTTP! status: ${response.status}');
@@ -279,6 +245,24 @@
             } else {
                 document.getElementById('aluno_id').innerHTML = '<option value="">Selecione um Aluno</option>';
             }
+        });
+        document.querySelectorAll('.openEditFormButton').forEach(button => {
+            button.addEventListener('click', function() {
+                document.getElementById('formTitle').textContent = 'Editar Premiado';
+                document.getElementById('premiadoId').value = button.dataset.id;
+
+                document.getElementById('aluno_id').value = button.dataset.aluno;
+                document.getElementById('medalha').value = button.dataset.medalha;
+                document.getElementById('olimpiada_id').value = button.dataset.olimpiada;
+                document.getElementById('turma').value = button.dataset.turma; // Corrigido para 'turma'
+                document.getElementById('serie').value = button.dataset.serie;
+                document.getElementById('ativo').value = button.dataset.ativo;
+
+                document.getElementById('form').action = "{{ route('premiados.update', '') }}/" + button
+                    .dataset.id;
+
+                document.getElementById('formContainer').classList.remove('hidden');
+            });
         });
     </script>
 </body>
