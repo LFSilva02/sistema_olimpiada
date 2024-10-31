@@ -17,6 +17,8 @@ Route::post('/turmas/store', [TurmaController::class, 'store'])->name('turmas.st
 Route::post('/turmas/inativar', [TurmaController::class, 'inativar'])->name('turmas.inativar');
 Route::put('/turmas/{id}/ativar', [TurmaController::class, 'ativar'])->name('turmas.ativar');
 Route::put('/turmas/{id}/update', [TurmaController::class, 'update'])->name('turmas.update');
+Route::get('/turmas/serie/{serie}', [TurmaController::class, 'getTurmasPorSerie']);
+
 
 
 //CONHECIMENTOS
@@ -42,10 +44,11 @@ Route::get('/turmas/{turma}/alunos', [AlunoController::class, 'alunosDaTurma'])-
 Route::get('/alunos/{id}/ativar', [AlunoController::class, 'ativar'])->name('alunos.ativar');
 Route::get('/alunos/{id}/inativar', [AlunoController::class, 'inativar'])->name('alunos.inativar');
 Route::get('alunos/{id}/edit', [AlunoController::class, 'edit'])->name('alunos.edit');
+Route::get('/alunos/turma/{turmaId}', [AlunoController::class, 'getAlunosByTurma']);
 
 //PREMIADOS
 Route::get('/premiados', [PremiadoController::class, 'index'])->name('premiados.index');
 Route::post('/premiados', [PremiadoController::class, 'cadastrarPremiado'])->name('premiados.store');
-Route::put('/premiados/{id}', [PremiadoController::class, 'update'])->name('premiados.update');
-Route::post('/premiados/inativar', [PremiadoController::class, 'inativar'])->name('premiados.inativar');
-Route::put('/premiados/ativar/{id}', [PremiadoController::class, 'ativar'])->name('premiados.ativar');
+Route::put('/premiados/{id}', [PremiadoController::class, 'editarPremiado'])->name('premiados.update');
+Route::post('/premiados/inativar', [PremiadoController::class, 'inativarPremiado'])->name('premiados.inativar');
+Route::put('/premiados/ativar/{id}', [PremiadoController::class, 'ativarPremiado'])->name('premiados.ativar');

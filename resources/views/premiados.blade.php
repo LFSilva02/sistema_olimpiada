@@ -39,7 +39,9 @@
             <h1 class="text-3xl mt-16 mb-12 font-bold">Premiados</h1>
         </div>
         <div class="mr-4">
-            <button id="openFormButton" class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Cadastrar Premiado</button>
+            <button id="openFormButton"
+                class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Cadastrar
+                Premiado</button>
         </div>
     </div>
 
@@ -52,18 +54,64 @@
                 @csrf
                 <input type="hidden" id="premiadoId" name="premiado_id" value="">
 
-                <div class="mb-4">
+                {{-- <div class="mb-4">
                     <label for="aluno_id" class="block text-sm font-medium text-gray-700">Aluno</label>
-                    <select name="aluno_id" id="aluno_id" class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
+                    <select name="aluno_id" id="aluno_id"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                         @foreach ($alunos as $aluno)
                             <option value="{{ $aluno->id }}">{{ $aluno->nome }}</option>
                         @endforeach
                     </select>
+                </div> --}}
+                <div class="mb-4">
+                    <label for="serie" class="block text-sm font-medium text-gray-700">Série</label>
+                    <select name="serie" id="serie"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option value="">Selecione a Série</option>
+                        <option value="1">1ª Série</option>
+                        <option value="2">2ª Série</option>
+                        <option value="3">3ª Série</option>
+                    </select>
                 </div>
 
                 <div class="mb-4">
+                    <label for="turma" class="block text-sm font-medium text-gray-700">Turma</label>
+                    <select name="turma_id" id="turma"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option value="">Selecione uma Turma</option>
+                    </select>
+                </div>
+                <select name="aluno_id" id="aluno_id" class="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                    required>
+                    <option value="">Selecione um Aluno</option>
+                </select>
+                {{-- <!-- Adicionando campo de Turma -->
+                <div class="mb-4">
+                    <label for="turma_id" class="block text-sm font-medium text-gray-700">Turma</label>
+                    <select name="turma_id" id="turma_id"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
+                        @foreach ($turmas as $turma)
+                            <option value="{{ $turma->id }}">{{ $turma->nome_turma }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Adicionando campo de Série -->
+                <div class="mb-4">
+                    <label for="serie" class="block text-sm font-medium text-gray-700">Série</label>
+                    <select name="serie" id="serie"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
+                        <option value="1">1ª Série</option>
+                        <option value="2">2ª Série</option>
+                        <option value="3">3ª Série</option>
+                        <!-- Adicione mais opções conforme necessário -->
+                    </select>
+                </div> --}}
+
+                <div class="mb-4">
                     <label for="medalha" class="block text-sm font-medium text-gray-700">Medalha</label>
-                    <select name="medalha" id="medalha" class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
+                    <select name="medalha" id="medalha"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                         <option value="ouro">Ouro</option>
                         <option value="prata">Prata</option>
                         <option value="bronze">Bronze</option>
@@ -72,7 +120,8 @@
 
                 <div class="mb-4">
                     <label for="olimpiada_id" class="block text-sm font-medium text-gray-700">Olimpíada</label>
-                    <select name="olimpiada_id" id="olimpiada_id" class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
+                    <select name="olimpiada_id" id="olimpiada_id"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                         @foreach ($olimpiadas as $olimpiada)
                             <option value="{{ $olimpiada->id }}">{{ $olimpiada->nome_olimpiada }}</option>
                         @endforeach
@@ -81,15 +130,18 @@
 
                 <div class="mb-4">
                     <label for="ativo" class="block text-sm font-medium text-gray-700">Ativo</label>
-                    <select name="ativo" id="ativo" class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
+                    <select name="ativo" id="ativo"
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                         <option value="1">Sim</option>
                         <option value="0">Não</option>
                     </select>
                 </div>
 
                 <div class="flex justify-between">
-                    <button type="submit" class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Salvar</button>
-                    <button type="button" id="cancelFormButton" class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+                    <button type="submit"
+                        class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Salvar</button>
+                    <button type="button" id="cancelFormButton"
+                        class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Cancelar</button>
                 </div>
             </form>
         </div>
@@ -106,43 +158,45 @@
         </thead>
         <tbody id="studentList">
             @forelse ($premiados as $premiado)
-            <tr>
-                <td>{{ $premiado->aluno->nome }}</td>
-                <td>{{ $premiado->olimpiada->nome_olimpiada }}</td>
-                <td>{{ $premiado->medalha }}</td>
-                <td>
-                    <div class="flex items-center ml-auto">
-                        <button class="openEditFormButton bi bi-pencil mx-3"
-                            data-id="{{ $premiado->id }}"
-                            data-aluno="{{ $premiado->aluno_id }}"
-                            data-medalha="{{ $premiado->medalha }}"
-                            data-olimpiada="{{ $premiado->olimpiada_id }}"
-                            data-ativo="{{ $premiado->ativo }}">
-                        </button>
-                        @if ($premiado->ativo)
-                        <form action="{{ route('premiados.inativar') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="premiado_id" value="{{ $premiado->id }}">
-                            <button type="submit" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded">
-                                <i class="bi bi-trash"></i>
+                <tr>
+                    <td>{{ $premiado->aluno->nome }}</td>
+                    <td>{{ $premiado->olimpiada->nome_olimpiada }}</td>
+                    <td>{{ $premiado->medalha }}</td>
+                    <td>
+                        <div class="flex items-center ml-auto">
+                            <button class="openEditFormButton bi bi-pencil mx-3" data-id="{{ $premiado->id }}"
+                                data-aluno="{{ $premiado->aluno_id }}" data-medalha="{{ $premiado->medalha }}"
+                                data-olimpiada="{{ $premiado->olimpiada_id }}"
+                                data-turma="{{ $premiado->turma_id }}" data-serie="{{ $premiado->serie }}"
+                                data-ativo="{{ $premiado->ativo }}">
                             </button>
-                        </form>
-                        @else
-                        <form action="{{ route('premiados.ativar', ['id' => $premiado->id]) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="bg-green-300 hover:bg-green-400 text-green-700 font-bold py-2 px-4 rounded">
-                                <i class="bi bi-check"></i>
-                            </button>
-                        </form>
-                        @endif
-                    </div>
-                </td>
-            </tr>
+                            @if ($premiado->ativo)
+                                <form action="{{ route('premiados.inativar') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="premiado_id" value="{{ $premiado->id }}">
+                                    <button type="submit"
+                                        class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            @else
+                                <form action="{{ route('premiados.ativar', ['id' => $premiado->id]) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit"
+                                        class="bg-green-300 hover:bg-green-400 text-green-700 font-bold py-2 px-4 rounded">
+                                        <i class="bi bi-check"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                    </td>
+                </tr>
             @empty
-            <tr>
-                <td colspan="4" class="text-center">Nenhum premiado encontrado</td>
-            </tr>
+                <tr>
+                    <td colspan="4" class="text-center">Nenhum premiado cadastrado</td>
+                </tr>
             @endforelse
         </tbody>
     </table>
@@ -151,7 +205,7 @@
         document.getElementById('openFormButton').addEventListener('click', function() {
             document.getElementById('formTitle').textContent = 'Cadastrar Novo Premiado';
             document.getElementById('premiadoId').value = '';
-            document.getElementById('form').action = '{{ route("premiados.store") }}';
+            document.getElementById('form').reset();
             document.getElementById('formContainer').classList.remove('hidden');
         });
 
@@ -159,32 +213,72 @@
             document.getElementById('formContainer').classList.add('hidden');
         });
 
-        // Adicionando funcionalidade de edição
-        const editButtons = document.querySelectorAll('.openEditFormButton');
-        editButtons.forEach(button => {
+        document.querySelectorAll('.openEditFormButton').forEach(button => {
             button.addEventListener('click', function() {
-                const id = this.dataset.id;
-                const alunoId = this.dataset.aluno;
-                const medalha = this.dataset.medalha;
-                const olimpiadaId = this.dataset.olimpiada;
-                const ativo = this.dataset.ativo;
-
-                // Preenche o formulário com os dados do premiado
-                document.getElementById('premiadoId').value = id;
-                document.getElementById('aluno_id').value = alunoId;
-                document.getElementById('medalha').value = medalha;
-                document.getElementById('olimpiada_id').value = olimpiadaId;
-                document.getElementById('ativo').value = ativo;
-
-                // Muda o título do formulário
                 document.getElementById('formTitle').textContent = 'Editar Premiado';
-
-                // Altera a ação do formulário para o método de atualização
-                document.getElementById('form').action = '{{ route("premiados.update", ":id") }}'.replace(':id', id);
-
-                // Exibe o formulário
+                document.getElementById('premiadoId').value = button.dataset.id;
+                document.getElementById('aluno_id').value = button.dataset.aluno;
+                document.getElementById('medalha').value = button.dataset.medalha;
+                document.getElementById('olimpiada_id').value = button.dataset.olimpiada;
+                document.getElementById('turma_id').value = button.dataset
+                    .turma; // Corrigido de 'turma' para 'turma_id'
+                document.getElementById('serie').value = button.dataset.serie;
+                document.getElementById('ativo').value = button.dataset.ativo;
                 document.getElementById('formContainer').classList.remove('hidden');
             });
+        });
+
+
+        document.getElementById('serie').addEventListener('change', function() {
+            const serie = encodeURIComponent(this.value);
+            if (serie) {
+                fetch(`/turmas/serie/${serie}`) // Substituímos {serie} por ${serie}
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro HTTP! status: ${response.status}');
+                        }
+
+                        return response.json();
+                    })
+                    .then(turmas => {
+                        const turmaSelect = document.getElementById('turma');
+                        turmaSelect.innerHTML = '<option value="">Selecione uma Turma</option>';
+                        turmas.forEach(turma => {
+                            const option = document.createElement('option');
+                            option.value = turma.id;
+                            option.textContent = turma.nome_turma;
+                            turmaSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Erro ao carregar turmas:', error));
+            } else {
+                document.getElementById('turma').innerHTML = '<option value="">Selecione uma Turma</option>';
+            }
+        });
+        document.getElementById('turma').addEventListener('change', function() {
+            const turmaId = this.value;
+            if (turmaId) {
+                fetch(`/alunos/turma/${turmaId}`) // API para buscar alunos da turma selecionada
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro HTTP! status: ${response.status}');
+                        }
+                        return response.json();
+                    })
+                    .then(alunos => {
+                        const alunoSelect = document.getElementById('aluno_id');
+                        alunoSelect.innerHTML = '<option value="">Selecione um Aluno</option>';
+                        alunos.forEach(aluno => {
+                            const option = document.createElement('option');
+                            option.value = aluno.id;
+                            option.textContent = aluno.nome;
+                            alunoSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Erro ao carregar alunos:', error));
+            } else {
+                document.getElementById('aluno_id').innerHTML = '<option value="">Selecione um Aluno</option>';
+            }
         });
     </script>
 </body>

@@ -80,4 +80,10 @@ class AlunoController extends Controller
 
         return view('alunos_da_turma', compact('aluno', 'turmas', 'turma'));
     }
+    public function getAlunosByTurma($turmaId)
+    {
+        // Busca alunos da turma específica
+        $alunos = Aluno::where('turma_id', $turmaId)->get();
+        return response()->json($alunos);
+    }
 }

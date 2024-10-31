@@ -4,56 +4,74 @@ namespace App\Http\Controllers;
 
 use App\Models\Aluno;
 use App\Models\Premiado;
-use App\Models\Olimpiada;
 use App\Models\Turma;
+use App\Models\Olimpiada;
 use Illuminate\Http\Request;
 
 class PremiadoController extends Controller
 {
     public function index()
     {
-        $alunos = Aluno::with('turma')->get();
-        $premiados = Premiado::all();
+        $premiados = Premiado::with('aluno', 'olimpiada')->get();
+        $alunos = Aluno::all();
+        $turmas = Turma::all();
         $olimpiadas = Olimpiada::all();
-        return view('premiados', compact('premiados', 'olimpiadas', 'alunos'));
+
+        return view('premiados', compact('premiados', 'alunos', 'turmas', 'olimpiadas'));
     }
 
     public function cadastrarPremiado(Request $request)
     {
         $request->validate([
-            'aluno_id' => 'required|exists:alunos,id',
-            'premiado_id' => 'required|exists:premiados,id',
-            'medalha' => 'required|string',
-            'ativo' => 'required|boolean',
+            'aluno_id' => 'required',
+            'medalha' => 'required',
+            'olimpiada_id' => 'required',
+            'turma_id' => 'required',
+            'serie' => 'required',
+            'ativo' => 'required',
         ]);
 
         Premiado::create($request->all());
 
         return redirect()->route('premiados.index')->with('success', 'Premiado cadastrado com sucesso!');
     }
-    public function inativar(Request $request)
+    public function editarPremiado(Request $request, $id)
     {
-        $id = $request->input('premiado_id');
-        $premiado = Premiado::find($id);
+        $request->validate([
+            'aluno_id' => 'required',
+            'medalha' => 'required',
+            'olimpiada_id' => 'required',
+            'turma_id' => 'required',
+            // 'serie' => 'required',
+            'ativo' => 'required',
+        ]);
 
-        if ($premiado) {
-            $premiado->ativo = 0;
-            $premiado->save();
-        }
+        $premiado = Premiado::findOrFail($id);
+        $premiado->update($request->all());
 
-        return redirect()->route('premiados.index')->with('success', 'Premiado inativada com sucesso');
+        return redirect()->route('premiados.index')->with('success', 'Premiado atualizado com sucesso!');
     }
 
-    public function ativar(Request $request, $id)
+    public function inativarPremiado(Request $request)
     {
-        $premiado = Premiado::find($id);
+        $premiado = Premiado::findOrFail($request->premiado_id);
+        $premiado->ativo = 0;
+        $premiado->save();
 
-        if ($premiado) {
-            $premiado->ativo = 1;
-            $premiado->save();
-        }
-
-        return redirect()->route('premiados.index')->with('success', 'Premiado ativada com sucesso');
+        return redirect()->route('premiados.index')->with('success', 'Premiado inativado com sucesso!');
     }
 
+    public function ativarPremiado($id)
+    {
+        $premiado = Premiado::findOrFail($id);
+        $premiado->ativo = 1;
+        $premiado->save();
+
+        return redirect()->route('premiados.index')->with('success', 'Premiado ativado com sucesso!');
+    }
+    public function getTurmasPorSerie($serie)
+    {
+        $turmas = Turma::where('serie', $serie)->get(['id', 'nome_turma']); // Selecionando apenas os campos necessários
+        return response()->json($turmas);
+    }
 }

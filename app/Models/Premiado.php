@@ -10,7 +10,7 @@ class Premiado extends Model
     use HasFactory;
 
     protected $table = 'premiados';
-    protected $fillable = ['aluno_id', 'medalha', 'olimpiada_id', 'ativo'];
+    protected $fillable = ['aluno_id', 'medalha', 'olimpiada_id', 'ativo', 'turma_id'];
 
     public function aluno()
     {
@@ -20,5 +20,9 @@ class Premiado extends Model
     public function olimpiada()
     {
         return $this->belongsTo(Olimpiada::class);
+    }
+    public function turma()
+    {
+        return $this->belongsTo(Turma::class);
     }
 }
