@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Alunos</title>
+    <!-- Adicionando o Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css">
     <style>
@@ -19,28 +20,32 @@
         .transition-transform {
             transition: transform 0.3s ease-in-out;
         }
+
+        .inactive {
+            background-color: #d1d5db;
+            color: #6b7280;
+        }
     </style>
 </head>
 
 <body class="bg-white">
 
     <!-- Cabeçalho -->
-    <div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-between items-center px-4">
-        <button id="menuToggle" class="text-white"></button>
+    <div
+        class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
         <div class="flex items-center space-x-4">
             <img src="{{ asset('storage/img/colegiolondrinense.png') }}" alt="Logo" class="h-14">
             <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
         </div>
-        <div></div>
     </div>
 
     @include('components.sidebar')
 
-    <!-- Alunos e Turmas -->
     <div class="ml-64 pt-20 mb-8 flex items-center justify-between">
         <div class="flex-1 text-center">
             <h1 class="text-3xl mt-16 mb-12 font-bold">Alunos</h1>
         </div>
+
         <div class="mr-4">
             <button id="openFormButton"
                 class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Cadastrar

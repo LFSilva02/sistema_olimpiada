@@ -166,46 +166,54 @@
             @endforelse
         </tbody>
     </table>
-
+    <!-- Footer -->
+    <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
+        <div class="container mx-auto">
+            <p class="text-sm">&copy; {{ date('Y') }} Olimpíadas Científicas Colégio Londrinense. Todos os
+                direitos reservados.</p>
+        </div>
+    </footer>
     <script>
+        // Exibir o formulário para cadastrar novo premiado
         document.getElementById('openFormButton').addEventListener('click', function() {
             document.getElementById('formTitle').textContent = 'Cadastrar Novo Premiado';
             document.getElementById('premiadoId').value = '';
             document.getElementById('form').reset();
+            document.getElementById('form').action = "{{ route('premiados.store') }}";
             document.getElementById('formContainer').classList.remove('hidden');
         });
 
+        // Cancelar e esconder o formulário
         document.getElementById('cancelFormButton').addEventListener('click', function() {
             document.getElementById('formContainer').classList.add('hidden');
         });
 
+        // Manipulador de eventos para carregar informações no formulário de edição
         document.querySelectorAll('.openEditFormButton').forEach(button => {
             button.addEventListener('click', function() {
                 document.getElementById('formTitle').textContent = 'Editar Premiado';
                 document.getElementById('premiadoId').value = button.dataset.id;
+
+                // Preencher os campos com os dados do premiado
                 document.getElementById('aluno_id').value = button.dataset.aluno;
                 document.getElementById('medalha').value = button.dataset.medalha;
                 document.getElementById('olimpiada_id').value = button.dataset.olimpiada;
-                document.getElementById('turma_id').value = button.dataset
-                    .turma;
+                document.getElementById('turma').value = button.dataset.turma;
                 document.getElementById('serie').value = button.dataset.serie;
                 document.getElementById('ativo').value = button.dataset.ativo;
+
+                // Definir a ação do formulário para o endpoint de atualização com o ID do premiado
+                document.getElementById('form').action = "{{ url('premiados') }}/" + button.dataset.id;
                 document.getElementById('formContainer').classList.remove('hidden');
             });
         });
 
-
+        // Carregar turmas com base na série selecionada
         document.getElementById('serie').addEventListener('change', function() {
             const serie = encodeURIComponent(this.value);
             if (serie) {
                 fetch(`/turmas/serie/${serie}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Erro HTTP! status: ${response.status}');
-                        }
-
-                        return response.json();
-                    })
+                    .then(response => response.ok ? response.json() : Promise.reject(response))
                     .then(turmas => {
                         const turmaSelect = document.getElementById('turma');
                         turmaSelect.innerHTML = '<option value="">Selecione uma Turma</option>';
@@ -221,16 +229,13 @@
                 document.getElementById('turma').innerHTML = '<option value="">Selecione uma Turma</option>';
             }
         });
+
+        // Carregar alunos com base na turma selecionada
         document.getElementById('turma').addEventListener('change', function() {
             const turmaId = this.value;
             if (turmaId) {
                 fetch(`/alunos/turma/${turmaId}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Erro HTTP! status: ${response.status}');
-                        }
-                        return response.json();
-                    })
+                    .then(response => response.ok ? response.json() : Promise.reject(response))
                     .then(alunos => {
                         const alunoSelect = document.getElementById('aluno_id');
                         alunoSelect.innerHTML = '<option value="">Selecione um Aluno</option>';
@@ -246,25 +251,8 @@
                 document.getElementById('aluno_id').innerHTML = '<option value="">Selecione um Aluno</option>';
             }
         });
-        document.querySelectorAll('.openEditFormButton').forEach(button => {
-            button.addEventListener('click', function() {
-                document.getElementById('formTitle').textContent = 'Editar Premiado';
-                document.getElementById('premiadoId').value = button.dataset.id;
-
-                document.getElementById('aluno_id').value = button.dataset.aluno;
-                document.getElementById('medalha').value = button.dataset.medalha;
-                document.getElementById('olimpiada_id').value = button.dataset.olimpiada;
-                document.getElementById('turma').value = button.dataset.turma; // Corrigido para 'turma'
-                document.getElementById('serie').value = button.dataset.serie;
-                document.getElementById('ativo').value = button.dataset.ativo;
-
-                document.getElementById('form').action = "{{ route('premiados.update', '') }}/" + button
-                    .dataset.id;
-
-                document.getElementById('formContainer').classList.remove('hidden');
-            });
-        });
     </script>
+
 </body>
 
 </html>

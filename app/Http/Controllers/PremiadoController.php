@@ -35,22 +35,7 @@ class PremiadoController extends Controller
 
         return redirect()->route('premiados.index')->with('success', 'Premiado cadastrado com sucesso!');
     }
-    public function editarPremiado(Request $request, $id)
-    {
-        $request->validate([
-            'aluno_id' => 'required',
-            'medalha' => 'required',
-            'olimpiada_id' => 'required',
-            'turma_id' => 'required',
-            // 'serie' => 'required',
-            'ativo' => 'required',
-        ]);
 
-        $premiado = Premiado::findOrFail($id);
-        $premiado->update($request->all());
-
-        return redirect()->route('premiados.index')->with('success', 'Premiado atualizado com sucesso!');
-    }
 
     public function inativarPremiado(Request $request)
     {
@@ -74,4 +59,21 @@ class PremiadoController extends Controller
         $turmas = Turma::where('serie', $serie)->get(['id', 'nome_turma']); // Selecionando apenas os campos necessários
         return response()->json($turmas);
     }
+    public function editarPremiado(Request $request, $id)
+{
+    $request->validate([
+        'aluno_id' => 'required',
+        'medalha' => 'required',
+        'olimpiada_id' => 'required',
+        'turma_id' => 'required',
+        'serie' => 'nullable', // Pode ser opcional se não for essencial
+        'ativo' => 'required',
+    ]);
+
+    $premiado = Premiado::findOrFail($id);
+    $premiado->update($request->only(['aluno_id', 'medalha', 'olimpiada_id', 'turma_id', 'ativo']));
+
+    return redirect()->route('premiados.index')->with('success', 'Premiado atualizado com sucesso!');
+}
+
 }

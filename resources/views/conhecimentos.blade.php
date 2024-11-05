@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Áreas de Conhecimento</title>
+    <!-- Adicionando o Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .sidebar-hidden {
             transform: translateX(-100%);
@@ -32,7 +31,8 @@
 <body class="bg-white">
 
     <!-- Cabeçalho -->
-    <div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
+    <div
+        class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
         <div class="flex items-center space-x-4">
             <img src="{{ asset('storage/img/colegiolondrinense.png') }}" alt="Logo" class="h-14">
             <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
@@ -43,12 +43,13 @@
 
     <div class="ml-64 pt-20 mb-8 flex items-center justify-between">
         <div class="flex-1 text-center">
-            <h1 class="text-3xl mt-16 mb-12 font-bold">Áreas de Conhecimento</h1>
+            <h1 class="text-3xl mt-16 mb-12 font-bold">Área de Conhecimento</h1>
         </div>
+
         <div class="mr-4">
             <button id="openFormButton"
                 class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Cadastrar
-                Área</button>
+                Área de Conhecimento</button>
         </div>
     </div>
 
@@ -103,12 +104,14 @@
                 <div class="mb-4">
                     <label for="nomeConhecimento" class="block text-sm font-medium text-gray-700">Nome da Área*</label>
                     <input type="text" name="nome_conhecimento" id="nomeConhecimento"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required>
                 </div>
                 <div class="mb-4">
                     <label for="descricao" class="block text-sm font-medium text-gray-700">Descrição*</label>
                     <input type="text" name="descricao" id="descricao"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required>
                 </div>
                 <div class="flex justify-between">
                     <button type="submit"
@@ -129,7 +132,8 @@
                 @method('PUT')
                 <input type="hidden" name="conhecimento_id" id="editConhecimentoId">
                 <div class="mb-4">
-                    <label for="editNomeConhecimento" class="block text-sm font-medium text-gray-700">Nome da Área*</label>
+                    <label for="editNomeConhecimento" class="block text-sm font-medium text-gray-700">Nome da
+                        Área*</label>
                     <input type="text" name="nome_conhecimento" id="editNomeConhecimento"
                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
@@ -140,14 +144,21 @@
                 </div>
                 <div class="flex justify-between">
                     <button type="submit"
-                        class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Salvar Alterações</button>
+                        class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Salvar
+                        Alterações</button>
                     <button type="button" id="cancelEditFormButton"
                         class="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">Cancelar</button>
                 </div>
             </form>
         </div>
     </div>
-
+    <!-- Footer -->
+    <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
+        <div class="container mx-auto">
+            <p class="text-sm">&copy; {{ date('Y') }} Olimpíadas Científicas Colégio Londrinense. Todos os
+                direitos reservados.</p>
+        </div>
+    </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const openFormButton = document.getElementById('openFormButton');

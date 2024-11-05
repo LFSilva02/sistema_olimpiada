@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Olimpíadas</title>
+    <!-- Adicionando o Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .sidebar-hidden {
             transform: translateX(-100%);
@@ -26,31 +25,18 @@
             background-color: #d1d5db;
             color: #6b7280;
         }
-
-        .form-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1rem;
-        }
-
-        .form-footer button {
-            flex: 1;
-            margin: 0 0.5rem;
-        }
     </style>
 </head>
 
 <body class="bg-white">
+
     <!-- Cabeçalho -->
     <div
-        class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-between items-center px-4">
-        <button id="menuToggle" class="text-white">
-        </button>
+        class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
         <div class="flex items-center space-x-4">
             <img src="{{ asset('storage/img/colegiolondrinense.png') }}" alt="Logo" class="h-14">
             <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
         </div>
-        <div></div>
     </div>
 
     @include('components.sidebar')
@@ -59,10 +45,11 @@
         <div class="flex-1 text-center">
             <h1 class="text-3xl mt-16 mb-12 font-bold">Olimpíadas</h1>
         </div>
+
         <div class="mr-4">
             <button id="openFormButton"
                 class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Cadastrar
-                Olimpíada</button>
+                Olimpíadas</button>
         </div>
     </div>
 
