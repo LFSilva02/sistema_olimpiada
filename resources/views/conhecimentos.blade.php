@@ -31,8 +31,7 @@
 <body class="bg-white">
 
     <!-- Cabeçalho -->
-    <div
-        class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
+    <div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
         <div class="flex items-center space-x-4">
             <img src="{{ asset('storage/img/colegiolondrinense.png') }}" alt="Logo" class="h-14">
             <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
@@ -135,12 +134,12 @@
                     <label for="editNomeConhecimento" class="block text-sm font-medium text-gray-700">Nome da
                         Área*</label>
                     <input type="text" name="nome_conhecimento" id="editNomeConhecimento"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
                 <div class="mb-4">
                     <label for="editDescricao" class="block text-sm font-medium text-gray-700">Descrição*</label>
                     <input type="text" name="descricao" id="editDescricao"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
+                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
                 <div class="flex justify-between">
                     <button type="submit"

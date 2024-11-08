@@ -7,7 +7,7 @@ use App\Models\Olimpiada;
 
 class OlimpiadaController extends Controller
 {
-    public function index()
+    public function consultar()
     {
         // Busque todas as Olimpíadas no banco de dados
         $olimpiadas = Olimpiada::all();
@@ -16,7 +16,7 @@ class OlimpiadaController extends Controller
         return view('olimpiadas', compact('olimpiadas'));
     }
 
-    public function store(Request $request)
+    public function cadastrar(Request $request)
     {
         // Validação dos dados do formulário
         $request->validate([
@@ -41,7 +41,7 @@ class OlimpiadaController extends Controller
         // Redirecionar de volta com uma mensagem de sucesso
         return redirect()->route('olimpiadas.index')->with('success', 'Olimpíada cadastrada com sucesso!');
     }
-    public function update(Request $request, $id)
+    public function editar(Request $request, $id)
     {
         $olimpiada = Olimpiada::find($id);
 

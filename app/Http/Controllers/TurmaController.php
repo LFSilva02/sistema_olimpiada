@@ -8,13 +8,13 @@ use App\Models\Turma;
 class TurmaController extends Controller
 {
     // Método para exibir as turmas
-    public function index()
+    public function consultar()
     {
         $turmas = Turma::all()->groupBy('serie');
         return view('turmas', compact('turmas'));
     }
 
-    public function store(Request $request)
+    public function cadastrar(Request $request)
     {
         $request->validate([
             'nomeTurma' => 'required|string|max:255',
@@ -32,7 +32,7 @@ class TurmaController extends Controller
         return redirect()->route('turmas.index');
     }
 
-    public function update(Request $request, $id)
+    public function editar(Request $request, $id)
     {
         $request->validate([
             'nomeTurma' => 'required|string|max:255',

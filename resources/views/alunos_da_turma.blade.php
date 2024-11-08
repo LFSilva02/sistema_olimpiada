@@ -31,8 +31,7 @@
 <body class="bg-white">
 
     <!-- Cabeçalho -->
-    <div
-        class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
+    <div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
         <div class="flex items-center space-x-4">
             <img src="{{ asset('storage/img/colegiolondrinense.png') }}" alt="Logo" class="h-14">
             <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
@@ -41,47 +40,60 @@
 
     @include('components.sidebar')
 
-    <div class="ml-64 pt-20 mb-8 flex items-center justify-between">
-        <div class="flex-1 text-center">
+    <div class="pt-20 mb-8 flex justify-center items-center">
+        <div class="text-center">
             <h1 class="text-3xl mt-16 mb-12 font-bold">Edição de alunos</h1>
-        </div>
-
-        <div class="mr-4">
-            <button id="openFormButton"
-                class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Editar alunos</button>
         </div>
     </div>
 
-        <!-- Lista de alunos com botão de editar -->
-        <div class="mb-4 mt-16">
-            <table class="min-w-full bg-white">
-                <thead>
+    <!-- Lista de alunos com botão de editar e inativar -->
+    <div class="mb-4 mt-16">
+        <table class="min-w-full bg-white text-center">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">Nome</th>
+                    <th class="py-2 px-4 border-b">Turma</th>
+                    <th class="py-2 px-4 border-b">Ativo</th>
+                    <th class="py-2 px-4 border-b">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($alunos as $aluno)
                     <tr>
-                        <th class="py-2 px-4 border-b">Nome</th>
-                        <th class="py-2 px-4 border-b">Turma</th>
-                        <th class="py-2 px-4 border-b">Ativo</th>
-                        <th class="py-2 px-4 border-b">Ações</th>
+                        <td class="py-2 px-4 border-b">{{ $aluno->nome }}</td>
+                        <td class="py-2 px-4 border-b">{{ $aluno->turma->nome_turma }}</td>
+                        <td class="py-2 px-4 border-b">{{ $aluno->ativo ? 'Sim' : 'Não' }}</td>
+                        <td class="py-2 px-4 border-b">
+                            <!-- Botão Editar -->
+                            <button class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded openEditFormButton"
+                                data-id="{{ $aluno->id }}" data-nome="{{ $aluno->nome }}"
+                                data-turma="{{ $aluno->turma_id }}" data-ativo="{{ $aluno->ativo }}">
+                                Editar
+                            </button>
+
+                            <!-- Botão Ativar/Inativar -->
+                            @if ($aluno->ativo)
+                                <form action="{{ route('alunos.inativar', ['id' => $aluno->id]) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded">
+                                        Inativar
+                                    </button>
+                                </form>
+                            @else
+                                <form action="{{ route('alunos.ativar', ['id' => $aluno->id]) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded">
+                                        Ativar
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($alunos as $aluno)
-                        <tr>
-                            <td class="py-2 px-4 border-b">{{ $aluno->nome }}</td>
-                            <td class="py-2 px-4 border-b">{{ $aluno->turma->nome_turma }}</td>
-                            <td class="py-2 px-4 border-b">{{ $aluno->ativo ? 'Sim' : 'Não' }}</td>
-                            <td class="py-2 px-4 border-b">
-                                <button
-                                    class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded openEditFormButton"
-                                    data-id="{{ $aluno->id }}" data-nome="{{ $aluno->nome }}"
-                                    data-turma="{{ $aluno->turma_id }}" data-ativo="{{ $aluno->ativo }}">
-                                    Editar
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 
     <!-- Formulário para editar alunos -->
@@ -105,9 +117,7 @@
                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required>
                         @foreach ($turmas as $turma)
-                            <option value="{{ $turma->id }}" {{ $aluno->turma_id == $turma->id ? 'selected' : '' }}>
-                                {{ $turma->nome_turma }}
-                            </option>
+                            <option value="{{ $turma->id }}" {{ $aluno->turma_id == $turma->id ? 'selected' : '' }}>{{ $turma->nome_turma }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -130,6 +140,7 @@
             </form>
         </div>
     </div>
+
     <!-- Rodapé -->
     <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
         <div class="container mx-auto">
@@ -137,6 +148,7 @@
                 reservados.</p>
         </div>
     </footer>
+
     <script>
         const editFormButtons = document.querySelectorAll('.openEditFormButton');
         const formContainer = document.getElementById('formContainer');
@@ -148,10 +160,7 @@
                 const turmaId = this.getAttribute('data-turma');
                 const ativoAluno = this.getAttribute('data-ativo');
 
-
-                // document.getElementById('alunoId').value = alunoId;
-                document.getElementById('nomeAluno').value = this.getAttribute('data-nome');
-                // document.getElementById('turma_nome').value = turma_nome;
+                document.getElementById('nomeAluno').value = nomeAluno;
                 document.getElementById('ativo').value = ativoAluno;
 
                 formContainer.classList.remove('hidden');

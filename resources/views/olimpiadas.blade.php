@@ -31,8 +31,7 @@
 <body class="bg-white">
 
     <!-- Cabeçalho -->
-    <div
-        class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
+    <div class="header bg-[#134196] text-white py-4 text-center fixed w-full z-10 flex justify-center items-center px-4">
         <div class="flex items-center space-x-4">
             <img src="{{ asset('storage/img/colegiolondrinense.png') }}" alt="Logo" class="h-14">
             <h1 class="text-xl font-bold">Olimpíadas Científicas Colégio Londrinense</h1>
@@ -101,7 +100,8 @@
             <form id="form" action="{{ route('olimpiadas.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="nomeOlimpiada" class="block text-sm font-medium text-gray-700">Nome da Olimpíada*</label>
+                    <label for="nomeOlimpiada" class="block text-sm font-medium text-gray-700">Nome da
+                        Olimpíada*</label>
                     <input type="text" name="nome_olimpiada" id="nomeOlimpiada"
                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                 </div>
@@ -130,12 +130,16 @@
                             class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"required>
                     </div>
                 </div>
-                <div class="form-footer">
-                    <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Salvar</button>
+                <div class="form-footer flex justify-between">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Salvar
+                    </button>
                     <button type="button" id="closeFormButton"
-                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        Cancelar
+                    </button>
                 </div>
+
             </form>
         </div>
     </div>
@@ -196,20 +200,17 @@
     </footer>
 
     <script>
-        document.getElementById('menuToggle').addEventListener('click', function() {
-            var sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('sidebar-hidden');
-            sidebar.classList.toggle('sidebar-visible');
-        });
-
+        // Abrir o formulário de cadastro
         document.getElementById('openFormButton').addEventListener('click', function() {
             document.getElementById('formContainer').classList.remove('hidden');
         });
 
+        // Fechar o formulário de cadastro
         document.getElementById('closeFormButton').addEventListener('click', function() {
             document.getElementById('formContainer').classList.add('hidden');
         });
 
+        // Abrir o formulário de edição com dados predefinidos
         document.querySelectorAll('.openEditFormButton').forEach(button => {
             button.addEventListener('click', function() {
                 document.getElementById('editFormContainer').classList.remove('hidden');
@@ -222,6 +223,7 @@
             });
         });
 
+        // Fechar o formulário de edição
         document.getElementById('closeEditFormButton').addEventListener('click', function() {
             document.getElementById('editFormContainer').classList.add('hidden');
         });

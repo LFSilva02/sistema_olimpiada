@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class AlunoController extends Controller
 {
-    public function index()
+    public function consultar()
     {
         $alunos = Aluno::with('turma')->get();
         $turmas = Turma::all();
         return view('alunos', compact('alunos', 'turmas'));
     }
 
-    public function store(Request $request)
+    public function cadastrar(Request $request)
     {
         $request->validate([
             'nome' => 'required',
@@ -46,16 +46,18 @@ class AlunoController extends Controller
         return redirect()->back()->with('success', 'Aluno ativado com sucesso!');
     }
 
-    public function inativar($id)
+    public function inativar(Request $request)
     {
+        $id = $request->input('aluno_id');
+
         $aluno = Aluno::findOrFail($id);
-        $aluno->ativo = false;
+        $aluno->ativo = 0;
         $aluno->save();
 
         return redirect()->back()->with('success', 'Aluno inativado com sucesso!');
     }
 
-    public function update(Request $request, $id)
+    public function editar(Request $request, $id)
 {
     $aluno = Aluno::findOrFail($id);
 

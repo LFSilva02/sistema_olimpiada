@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 class ConhecimentoController extends Controller
 {
-    public function index()
+    public function consultar()
     {
         $conhecimentos = Conhecimento::all();
         return view('conhecimentos', compact('conhecimentos'));
     }
 
-    public function store(Request $request)
+    public function cadastrar(Request $request)
     {
         $request->validate([
             'nome_conhecimento' => 'required',
@@ -55,7 +55,7 @@ class ConhecimentoController extends Controller
 
         return redirect()->route('conhecimentos.index');
     }
-    public function update(Request $request, $id)
+    public function editar(Request $request, $id)
     {
         $request->validate([
             'nome_conhecimento' => 'required|string|max:255',

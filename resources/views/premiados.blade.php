@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <div id="formContainer" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div id="formContainer" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center mt-10">
         <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
             <h2 id="formTitle" class="text-2xl font-bold mb-4">Cadastrar Novo Premiado</h2>
 
@@ -95,15 +95,6 @@
                     </select>
                 </div>
 
-                <div class="mb-4">
-                    <label for="ativo" class="block text-sm font-medium text-gray-700">Ativo</label>
-                    <select name="ativo" id="ativo"
-                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-
                 <div class="flex justify-between">
                     <button type="submit"
                         class="bg-[#134196] hover:bg-blue-300 text-white hover:text-black font-bold py-2 px-4 rounded">Salvar</button>
@@ -117,20 +108,20 @@
     <table class="min-w-full bg-white border rounded-md">
         <thead>
             <tr>
-                <th class="border px-4 py-2 text-left">Nome</th>
-                <th class="border px-4 py-2 text-left">Olimpíada</th>
-                <th class="border px-4 py-2 text-left">Medalha</th>
-                <th class="border px-4 py-2 text-left">Ações</th>
+                <th class="border px-4 py-2 text-center">Nome</th>
+                <th class="border px-4 py-2 text-center">Olimpíada</th>
+                <th class="border px-4 py-2 text-center">Medalha</th>
+                <th class="border px-4 py-2 text-center">Ações</th>
             </tr>
         </thead>
         <tbody id="studentList">
             @forelse ($premiados as $premiado)
-                <tr>
-                    <td>{{ $premiado->aluno->nome }}</td>
-                    <td>{{ $premiado->olimpiada->nome_olimpiada }}</td>
-                    <td>{{ $premiado->medalha }}</td>
-                    <td>
-                        <div class="flex items-center ml-auto">
+                <tr class="text-center"> <!-- Alinhamento centralizado nas linhas -->
+                    <td class="border px-4 py-2">{{ $premiado->aluno->nome }}</td>
+                    <td class="border px-4 py-2">{{ $premiado->olimpiada->nome_olimpiada }}</td>
+                    <td class="border px-4 py-2">{{ $premiado->medalha }}</td>
+                    <td class="border px-4 py-2">
+                        <div class="flex items-center justify-center space-x-2">
                             <button class="openEditFormButton bi bi-pencil mx-3" data-id="{{ $premiado->id }}"
                                 data-aluno="{{ $premiado->aluno_id }}" data-medalha="{{ $premiado->medalha }}"
                                 data-olimpiada="{{ $premiado->olimpiada_id }}" data-turma="{{ $premiado->turma_id }}"
@@ -166,6 +157,8 @@
             @endforelse
         </tbody>
     </table>
+
+
     <!-- Footer -->
     <footer class="bg-[#134196] text-white py-4 text-center mt-4 fixed bottom-0 w-full">
         <div class="container mx-auto">
@@ -200,7 +193,6 @@
                 document.getElementById('olimpiada_id').value = button.dataset.olimpiada;
                 document.getElementById('turma').value = button.dataset.turma;
                 document.getElementById('serie').value = button.dataset.serie;
-                document.getElementById('ativo').value = button.dataset.ativo;
 
                 // Definir a ação do formulário para o endpoint de atualização com o ID do premiado
                 document.getElementById('form').action = "{{ url('premiados') }}/" + button.dataset.id;
