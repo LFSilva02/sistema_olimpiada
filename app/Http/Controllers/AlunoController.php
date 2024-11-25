@@ -11,7 +11,7 @@ class AlunoController extends Controller
     public function consultar()
     {
         $alunos = Aluno::with('turma')->get();
-        $turmas = Turma::all();
+        $turmas = Turma::orderBy('serie')->orderBy('nome_turma')->get();
         return view('alunos', compact('alunos', 'turmas'));
     }
 
@@ -20,9 +20,8 @@ class AlunoController extends Controller
         $request->validate([
             'nome' => 'required',
             'turma_id' => 'required|exists:turmas,id',
-            'ativo' => 'required|boolean',
         ]);
-
+ 
         Aluno::create($request->all());
 
         return redirect()->route('alunos.index')->with('success', 'Aluno cadastrado com sucesso.');

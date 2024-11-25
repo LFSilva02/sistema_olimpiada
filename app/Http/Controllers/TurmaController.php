@@ -11,6 +11,7 @@ class TurmaController extends Controller
     public function consultar()
     {
         $turmas = Turma::all()->groupBy('serie');
+        $turmas = Turma::orderBy('serie')->get()->groupBy('serie');
         return view('turmas', compact('turmas'));
     }
 

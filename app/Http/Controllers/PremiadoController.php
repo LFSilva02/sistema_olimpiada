@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class PremiadoController extends Controller
 {
-    public function index()
+    public function consultar()
     {
         $premiados = Premiado::with('aluno', 'olimpiada')->get();
         $alunos = Aluno::all();
@@ -20,7 +20,7 @@ class PremiadoController extends Controller
         return view('premiados', compact('premiados', 'alunos', 'turmas', 'olimpiadas'));
     }
 
-    public function cadastrarPremiado(Request $request)
+    public function cadastrar(Request $request)
     {
         $request->validate([
             'aluno_id' => 'required',
@@ -28,14 +28,12 @@ class PremiadoController extends Controller
             'olimpiada_id' => 'required',
             'turma_id' => 'required',
             'serie' => 'required',
-            'ativo' => 'required',
         ]);
 
         Premiado::create($request->all());
 
         return redirect()->route('premiados.index')->with('success', 'Premiado cadastrado com sucesso!');
     }
-
 
     public function inativarPremiado(Request $request)
     {

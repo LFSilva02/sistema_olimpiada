@@ -71,6 +71,18 @@
         </div>
     </div>
 
+    <!--Botão Ativar/Inativar -->
+    @if ($aluno->ativo)
+    <form action="{{ route('alunos.inativar') }}" method="POST" class="inline-block">
+        @csrf
+        <input type="hidden" name="aluno_id" value="{{ $aluno->id }}">
+        <button type="submit"
+            class="bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded">
+            Inativar
+        </button>
+    </form>
+    @else
+
     <!-- Formulário para cadastrar alunos -->
     <div id="formContainer" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">

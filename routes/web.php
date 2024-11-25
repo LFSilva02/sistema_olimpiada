@@ -41,8 +41,8 @@ Route::get('/alunos', [AlunoController::class, 'consultar'])->name('alunos.index
 Route::post('/alunos', [AlunoController::class, 'cadastrar'])->name('alunos.store');
 Route::put('/alunos/{id}', [AlunoController::class, 'editar'])->name('alunos.update');
 Route::get('/turmas/{turma}/alunos', [AlunoController::class, 'alunosDaTurma'])->name('turmas.alunos');
-Route::get('/alunos/{id}/ativar', [AlunoController::class, 'ativar'])->name('alunos.ativar');
-Route::get('/alunos/inativar', [AlunoController::class, 'inativar'])->name('alunos.inativar');
+Route::put('/alunos/{id}/ativar', [AlunoController::class, 'ativar'])->name('alunos.ativar');
+Route::post('/alunos/inativar', [AlunoController::class, 'inativar'])->name('alunos.inativar');
 Route::get('alunos/{id}/edit', [AlunoController::class, 'edit'])->name('alunos.edit');
 Route::get('/alunos/turma/{turmaId}', [AlunoController::class, 'getAlunosByTurma']);
 

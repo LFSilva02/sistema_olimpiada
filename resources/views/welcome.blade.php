@@ -10,6 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Styles -->
     <style>
@@ -902,9 +903,15 @@
     </style>
 </head>
 
-<body>
+<body class="bg-blue-300">
     <div class="flex justify-center items-center h-screen">
-        <p>Olimpíadas Científicas Colégio Londrinense</p>
+        <div class="text-center bg-white p-12 rounded-lg shadow-xl w-full max-w-lg">
+            <h1 class="text-4xl text-[#134196] font-semibold mb-8">Olimpíadas Científicas Colégio Londrinense</h1>
+            <a href="{{ route('conhecimentos.index') }}"
+                class="inline-block px-8 py-4 bg-[#134196] text-white font-semibold text-xl rounded-md hover:bg-[#0f3d7f] transition duration-300">
+                Iniciar
+            </a>
+        </div>
     </div>
 </body>
 
