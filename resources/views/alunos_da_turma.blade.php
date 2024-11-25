@@ -73,13 +73,14 @@
 
                             <!-- Botão Ativar/Inativar -->
                             @if ($aluno->ativo)
-                                <form action="{{ route('alunos.inativar', ['id' => $aluno->id]) }}" method="POST" class="inline-block">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded">
-                                        Inativar
-                                    </button>
-                                </form>
+                            <form action="{{ route('alunos.inativar') }}" method="POST" class="inline-block">
+                                @csrf
+                                <input type="hidden" name="aluno_id" value="{{ $aluno->id }}">
+                                <button type="submit"
+                                    class="bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded">
+                                    Inativar
+                                </button>
+                            </form>
                             @else
                                 <form action="{{ route('alunos.ativar', ['id' => $aluno->id]) }}" method="POST" class="inline-block">
                                     @csrf
