@@ -35,7 +35,7 @@ class PremiadoController extends Controller
         return redirect()->route('premiados.index')->with('success', 'Premiado cadastrado com sucesso!');
     }
 
-    public function inativarPremiado(Request $request)
+    public function inativar(Request $request)
     {
         $premiado = Premiado::findOrFail($request->premiado_id);
         $premiado->ativo = 0;
@@ -44,7 +44,7 @@ class PremiadoController extends Controller
         return redirect()->route('premiados.index')->with('success', 'Premiado inativado com sucesso!');
     }
 
-    public function ativarPremiado($id)
+    public function ativar($id)
     {
         $premiado = Premiado::findOrFail($id);
         $premiado->ativo = 1;
